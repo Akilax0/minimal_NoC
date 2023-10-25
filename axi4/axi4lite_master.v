@@ -1,3 +1,5 @@
+`include "../ni/fifo_32x64"
+
 module axi4lite_master(
     
     input wire aclk,
@@ -28,7 +30,10 @@ module axi4lite_master(
     input wire [1:0] bresp,
     input wire bvalid, 
     output wire bready
+    
 
+    
+    
 );
 
 // rresp or bresp
@@ -38,5 +43,17 @@ module axi4lite_master(
 // 0b11 - DECERR
 
 
+
+    fifo_32x64 my_fifo (
+        .clk(clk),
+        .reset(reset),
+        .write_en(write_en),
+        .read_en(read_en),
+        .data_in(data_in),
+        .data_out(data_out),
+        .full(full),
+        .empty(empty)
+    );
+`
 
 endmodule

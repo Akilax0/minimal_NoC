@@ -1,4 +1,4 @@
-module fifo(
+module fifo_32x64(
     input wire clk,        // Clock signal
     input wire reset,      // Reset signal
 
@@ -9,8 +9,13 @@ module fifo(
     output reg [63:0] data_out, // Data output (64 bits wide)
 
     output wire full,      // Full flag
-    output wire empty      // Empty flag
+    output wire empty,      // Empty flag
+
+    // nhandle this appropriately 
+    output wire thresh
 );
+
+  // fifo module to store addr + data for network write read
 
   // Define FIFO parameters
   parameter FIFO_DEPTH = 32;

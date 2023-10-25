@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "../ni/fifo.v"
+`include "../ni/fifo_32x64.v"
 
 module fifo_tb();
 
@@ -14,7 +14,7 @@ module fifo_tb();
     wire empty;
 
     // Instantiate the FIFO module
-    fifo my_fifo (
+    fifo_32x64 my_fifo (
         .clk(clk),
         .reset(reset),
         .write_en(write_en),
@@ -32,12 +32,12 @@ module fifo_tb();
 
         // Initialize signals
         clk = 0;
-        reset = 0;
+        reset = 1;
         write_en = 0;
         read_en = 0;
         data_in = 64'h0;
 
-        #10;
+        #20;
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
