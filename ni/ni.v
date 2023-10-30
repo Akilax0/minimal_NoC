@@ -27,7 +27,6 @@ module ni(
     
 );
 
-
     // to be used by master axi4lite interface 
     input wire [31:0] axi4_write_data;
     input wire [31:0] axi4_write_addr;
@@ -54,7 +53,6 @@ module ni(
         .thresh(axi4_thresh)
     );
     
-
     fifo_32x64 read_fifo (
         .clk(clk),
         .reset(reset),
@@ -65,6 +63,38 @@ module ni(
         .full(core_full),
         .empty(axi4_empty),
         .thresh(axi4_thresh)
+    );
+    
+
+    axi4lite_master core_master(
+        input wire aclk,
+        input wire arestn,
+        
+        // read address channel
+        output wire [31:0] araddr,
+        output wire arvalid,
+        input wire arready,
+
+        // read data channel
+        input wire [31:0] rdata,
+        input wire [1:0] rresp,
+        input wire rvalid,
+        output wire rready,
+
+        // write address channel
+        output wire [31:0] awaddr,
+        output wire awvalid,
+        input wire awready,
+
+        // write data channel
+        output wire [31:0] wdata,
+        output wire wvalid,
+        input wire wready,
+
+        // write response
+        input wire [1:0] bresp,
+        input wire bvalid, 
+        output wire bready
     );
     
 

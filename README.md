@@ -13,3 +13,7 @@ The NoC architecture is based on ranveNoc using only the required components for
 - Output Module
 - Router 
 
+Circular Queue
+
+
+https://github.com/aniketnk/circular-queue-verilog/tree/master
