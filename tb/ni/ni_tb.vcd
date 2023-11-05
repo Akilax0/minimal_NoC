@@ -1,0 +1,149 @@
+$date
+	Sun Nov  5 08:39:56 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module ni_tb $end
+$var wire 1 ! core_error $end
+$var wire 1 " core_empty $end
+$var wire 32 # axi4_read_data [31:0] $end
+$var wire 5 $ axi4_ocup [4:0] $end
+$var wire 1 % axi4_full $end
+$var reg 32 & axi4_read_addr [31:0] $end
+$var reg 1 ' axi4_read_en $end
+$var reg 1 ( clk $end
+$var reg 32 ) core_write_addr [31:0] $end
+$var reg 32 * core_write_data [31:0] $end
+$var reg 1 + core_write_en $end
+$var reg 1 , reset $end
+$scope module my_ni $end
+$var wire 32 - axi4_read_addr [31:0] $end
+$var wire 1 ' axi4_read_en $end
+$var wire 1 ( clk $end
+$var wire 32 . core_write_addr [31:0] $end
+$var wire 32 / core_write_data [31:0] $end
+$var wire 1 + core_write_en $end
+$var wire 1 , reset $end
+$var wire 1 ! core_error $end
+$var wire 1 " core_empty $end
+$var wire 32 0 axi4_read_data [31:0] $end
+$var wire 5 1 axi4_ocup [4:0] $end
+$var wire 1 % axi4_full $end
+$scope module write_fifo $end
+$var wire 1 ( clk $end
+$var wire 64 2 data_in [63:0] $end
+$var wire 1 ' read_en $end
+$var wire 1 , reset $end
+$var wire 1 + write_en $end
+$var reg 64 3 data_out [63:0] $end
+$var reg 1 " empty $end
+$var reg 1 ! error $end
+$var reg 5 4 fifo_ocup [4:0] $end
+$var reg 1 % full $end
+$var reg 5 5 next_read_ptr [4:0] $end
+$var reg 5 6 next_write_ptr [4:0] $end
+$var reg 5 7 ocup [4:0] $end
+$var reg 5 8 read_ptr_ff [4:0] $end
+$var reg 5 9 write_ptr_ff [4:0] $end
+$var integer 32 : i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b100000 :
+b0 9
+b0 8
+b0 7
+b0 6
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+b0 0
+b0 /
+bx .
+bx -
+1,
+0+
+b0 *
+bx )
+0(
+0'
+bx &
+0%
+b0 $
+b0 #
+1"
+0!
+$end
+#5000
+b100000 :
+1(
+#10000
+0(
+#15000
+b100000 :
+1(
+#20000
+0(
+b10100101101001011010010110100101 2
+b10100101101001011010010110100101 *
+b10100101101001011010010110100101 /
+0,
+#25000
+1(
+#30000
+b1 6
+0(
+1+
+#35000
+b10100101101001011010010110100101 #
+b10100101101001011010010110100101 0
+b1 $
+b1 1
+b1 7
+b1 4
+b10 6
+b10100101101001011010010110100101 3
+0"
+b1 9
+1(
+#40000
+0(
+b10100101101001011010000110100101 2
+b10100101101001011010000110100101 *
+b10100101101001011010000110100101 /
+#45000
+b10 $
+b10 1
+b10 7
+b10 4
+b11 6
+b10 9
+1(
+#50000
+b1 5
+b10 6
+0(
+1'
+0+
+#55000
+b10100101101001011010000110100101 #
+b10100101101001011010000110100101 0
+b1 $
+b1 1
+b1 7
+b1 4
+b10 5
+b10100101101001011010000110100101 3
+b1 8
+1(
+#60000
+0(

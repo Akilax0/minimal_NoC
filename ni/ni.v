@@ -1,6 +1,13 @@
-`include "../axi4/axi4lite_master.v"
-`include "../axi4/axi4lite_slave.v"
-`include "fifo_32x64.v"
+`include "../../axi4/axi4lite_master.v"
+`include "../../axi4/axi4lite_slave.v"
+`include "../../ni/gp_fifo.v"
+
+/*
+File : ni.v
+Description: This is the NoC side of things with a 
+    axi4lite slave for core side and signals to send and recv 
+    flits from NoC side. 
+*/
 
 module ni(
     
@@ -20,12 +27,20 @@ module ni(
 
     // this will be an interrupt which in turn would handle the read_en
     // the threshold can be set to be of a packet size ?  
-    output wire core_thresh,
+    output wire [4:0] core_ocup
     
     output wire core_empty,
-    output wire core_full
-    
+    output wire core_full,
+
+    output wire core_error,
+
 );
+
+
+    // Define Slave at input 
+    // this will be the entry for NI 
+    // handle master seperately 
+    
 
     // to be used by master axi4lite interface 
     input wire [31:0] axi4_write_data;
@@ -37,65 +52,87 @@ module ni(
     output wire [31:0] axi4_read_addr;
     input wire axi4_read_en;
 
-    output wire axi4_thresh;
     output wire axi4_full;
-    output wire axi4_full;
+    output wire axi4_empty;
 
-    fifo_32x64 write_fifo (
+    output wire axi4_error,
+    output wire [4:0] axi4_ocup
+
+    wire [63:0] core_data_in,core_data_out,axi4_data_in,axi4_data_out;
+
+    // [data , addr ]  => [MSB,LSB]
+    assign core_data_in[63:32] = core_write_data;
+    assign core_data_in[31:0]  = core_write_addr;
+
+    assign axi4_data_in[63:32] = axi4_write_data;
+    assign axi4_data_in[31:0]  = axi4_write_addr;
+    
+    assign core_read_data =  core_data_out[63:32];
+    assign core_read_addr =  core_data_out[31:0];
+
+    assign axi4_read_data = axi4_data_out[63:32]; 
+    assign axi4_read_addr = axi4_data_out[31:0]; 
+
+    axi4lite_slave slave(
+        .aclk(clk),
+        .arestn(~reset),
+        
+        // read address channel
+        .araddr(araddr),
+        .arvalid(arvalid),
+        arready(arready),
+
+        // read data channel
+        .rdata(rdata),
+        .rresp(rresp),
+        .rvalid(rvalid),
+        .rready(rready),
+
+        // write address channel
+        .awaddr(awaddr),
+        .awvalid(awvalid),
+        .awready(awready),
+
+        // write data channel
+        .wdata(wdata),
+        .wvalid(wvalid),
+        .wready(wready),
+
+        // write response
+        .bresp(bresp),
+        .bvalid(bvalid), 
+        .bready(bready)
+    );
+
+
+    gp_fifo write_fifo (
         .clk(clk),
         .reset(reset),
         .write_en(core_write_en),
         .read_en(axi4_read_en),
-        .data_in(data_in),
-        .data_out(axi4_read_data),
+        .data_in(core_data_in),
+        .data_out(axi4_data_out),
+        .error(core_error),
         .full(axi4_full),
         .empty(core_empty),
-        .thresh(axi4_thresh)
+        .ocup(axi4_ocup)
     );
     
-    fifo_32x64 read_fifo (
+    gp_fifo read_fifo (
         .clk(clk),
         .reset(reset),
         .write_en(axi4_write_en),
         .read_en(core_read_en),
-        .data_in(axi4_write_data),
-        .data_out(core_read_data),
+        .data_in(axi4_data_in),
+        .data_out(core_data_out),
+        .error(axi4_error),
         .full(core_full),
         .empty(axi4_empty),
-        .thresh(axi4_thresh)
+        .ocup(core_ocup)
     );
     
 
-    axi4lite_master core_master(
-        input wire aclk,
-        input wire arestn,
-        
-        // read address channel
-        output wire [31:0] araddr,
-        output wire arvalid,
-        input wire arready,
 
-        // read data channel
-        input wire [31:0] rdata,
-        input wire [1:0] rresp,
-        input wire rvalid,
-        output wire rready,
 
-        // write address channel
-        output wire [31:0] awaddr,
-        output wire awvalid,
-        input wire awready,
-
-        // write data channel
-        output wire [31:0] wdata,
-        output wire wvalid,
-        input wire wready,
-
-        // write response
-        input wire [1:0] bresp,
-        input wire bvalid, 
-        output wire bready
-    );
-    
 
 endmodule

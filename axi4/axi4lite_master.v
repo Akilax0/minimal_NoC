@@ -1,4 +1,4 @@
-`include "../ni/fifo_32x64"
+// `include "../ni/fifo_32x64"
 
 module axi4lite_master(
     
@@ -44,16 +44,5 @@ module axi4lite_master(
 
 
 
-    fifo_32x64 my_fifo (
-        .clk(clk),
-        .reset(reset),
-        .write_en(write_en),
-        .read_en(read_en),
-        .data_in(data_in),
-        .data_out(data_out),
-        .full(full),
-        .empty(empty)
-    );
-`
 
 endmodule
