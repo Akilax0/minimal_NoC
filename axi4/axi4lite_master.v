@@ -44,5 +44,15 @@ module axi4lite_master(
 
 
 
+/*
+
+Handling write
+
+- Puts DATA and ADDR and assers AWVALI, WVALID, BREADY
+- Check slave assert AWREADy and WREADY -> deassert valid signals
+
+
+*/
+
 
 endmodule

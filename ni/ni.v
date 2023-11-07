@@ -132,7 +132,9 @@ module ni(
     );
     
 
-
+    always@(posedge clk)begin
+        //FIFO behaviour here for data exchange through slave
+    end
 
 
 endmodule
