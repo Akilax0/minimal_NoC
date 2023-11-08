@@ -18,9 +18,12 @@ module input_router(
     input wire reset,
     
     input wire [7:0] flit;
-    output wire vc_select;
+    output wire [1:0] vc_select;
 
 );
+
+
+
 
 
 

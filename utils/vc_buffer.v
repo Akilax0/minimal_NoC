@@ -6,7 +6,7 @@ Descripton: Virtual Buffer where internally FIFO
 Virtual buffers to be use in input and 
 output modules of the noc
 
-64 slots of 8 bits
+32 slots of 8 bits
 
 */
 
@@ -20,13 +20,13 @@ module vc_buffer(
     output reg error,
     output reg full,
     output reg empty,
-    output reg [5:0] ocup
+    output reg [4:0] ocup
 );
 
     // this is one less than MSB (32bit -> 5 )
-    `define MSB_SLOT 5
+    `define MSB_SLOT 4
 
-    reg [7:0] fifo_ff [63:0]; 
+    reg [7:0] fifo_ff [31:0]; 
     reg [`MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
 
     always@*begin
@@ -54,7 +54,7 @@ module vc_buffer(
         if(reset) begin
             write_ptr_ff <= 1'b0;
             read_ptr_ff <= 1'b0;
-            for (i = 0; i < 64; i = i + 1)
+            for (i = 0; i < 32; i = i + 1)
             begin
                 fifo_ff[i] <= 0;       // Write zero to all registers
             end
