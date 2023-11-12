@@ -1,4 +1,4 @@
-module mux_4to1_8bit (
+module mux_4to1_8bit(
   input wire [7:0] data_N,
   input wire [7:0] data_S,
   input wire [7:0] data_E,

@@ -14,6 +14,7 @@ CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 
 `include "input_router.v"
 `include "utils/vc_buffer.v"
+`include "utils/rr_arbiter.v"
 `include "utils/demux_1to4.v"
 `include "utils/mux_4to1.v"
 `include "utils/mux_4to1_8bit.v"
@@ -25,7 +26,6 @@ module input_module(
     input reg read_en;
     input reg write_en;
     output wire [7:0] data_out; 
-
 );
 
     reg write_en_N, write_en_S, write_en_E, write_en_W;
@@ -154,6 +154,14 @@ module input_module(
         full_L,
         empty_L,
         ocup_L
+    );
+
+    // check the behaviour here and remove comment 
+    rr_arbiter arb(
+      clk,
+      reset,
+      input wire [3:0] request, // 5 request inputs
+      output reg [2:0] rr_select
     );
 
 endmodule
