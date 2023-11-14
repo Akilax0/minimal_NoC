@@ -1,0 +1,142 @@
+$date
+	Tue Nov 14 12:40:37 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module axi4lite_slave_tb $end
+$var wire 2 ! bresp [1:0] $end
+$var wire 2 " rresp [1:0] $end
+$var wire 1 # wready $end
+$var wire 1 $ rvalid $end
+$var wire 32 % rdata [31:0] $end
+$var wire 1 & bvalid $end
+$var wire 1 ' awready $end
+$var wire 1 ( arready $end
+$var reg 32 ) araddr [31:0] $end
+$var reg 1 * arestn $end
+$var reg 1 + arvalid $end
+$var reg 32 , awaddr [31:0] $end
+$var reg 1 - awvalid $end
+$var reg 1 . bready $end
+$var reg 1 / clk $end
+$var reg 1 0 rready $end
+$var reg 32 1 wdata [31:0] $end
+$var reg 1 2 wvalid $end
+$scope module my_slave $end
+$var wire 1 / aclk $end
+$var wire 32 3 araddr [31:0] $end
+$var wire 1 * arestn $end
+$var wire 1 + arvalid $end
+$var wire 32 4 awaddr [31:0] $end
+$var wire 1 - awvalid $end
+$var wire 1 . bready $end
+$var wire 2 5 bresp [1:0] $end
+$var wire 1 0 rready $end
+$var wire 2 6 rresp [1:0] $end
+$var wire 32 7 wdata [31:0] $end
+$var wire 1 # wready $end
+$var wire 1 2 wvalid $end
+$var wire 1 8 reset $end
+$var reg 1 ( arready $end
+$var reg 1 ' awready $end
+$var reg 1 & bvalid $end
+$var reg 32 9 rdata [31:0] $end
+$var reg 1 $ rvalid $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx 9
+18
+b0 7
+b0 6
+b0 5
+b0 4
+b0 3
+02
+b0 1
+00
+0/
+0.
+0-
+b0 ,
+0+
+0*
+b0 )
+0(
+0'
+0&
+bx %
+0$
+0#
+b0 "
+b0 !
+$end
+#10000
+1/
+08
+1*
+#20000
+0/
+#30000
+1#
+1'
+1/
+1.
+12
+b10110101101101011011010110110101 1
+b10110101101101011011010110110101 7
+1-
+b10100101101001011010010110100101 ,
+b10100101101001011010010110100101 4
+#40000
+0/
+#50000
+0#
+0'
+02
+0-
+1/
+b0 1
+b0 7
+b0 ,
+b0 4
+#52000
+1&
+#60000
+0/
+#70000
+0.
+1/
+#72000
+0&
+#80000
+0/
+#90000
+1(
+1/
+10
+1+
+b10100101101001011010010110100101 )
+b10100101101001011010010110100101 3
+#100000
+0/
+#110000
+1$
+b10100101101001011010010110100101 %
+b10100101101001011010010110100101 9
+0(
+0+
+1/
+#120000
+0/
+#130000
+00
+1/
+#140000
+0/

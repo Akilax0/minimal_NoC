@@ -1,77 +1,116 @@
 `timescale 1ns / 1ps
-`include "../../ni/ni.v"
+`include "../../axi4/axi4lite_slave.v"
 
-module ni_tb();
+/*
+
+timing checks on 
+https://www.realdigital.org/doc/a9fee931f7a172423e1ba73f66ca4081
+
+
+*/
+module axi4lite_slave_tb();
     
     reg clk;
-    reg reset;
-    reg [31:0] core_write_data;
-    reg [31:0] core_write_addr;
-    reg core_write_en;
-    wire core_empty;
-    wire core_error;
+    reg arestn;
     
-    wire [31:0] axi4_read_data;
-    reg [31:0] axi4_read_addr;
-    reg axi4_read_en;
-    wire axi4_full;
-    wire [4:0] axi4_ocup;
+    // read address channel
+    reg [31:0] araddr;
+    reg arvalid;
+    wire arready;
+
+    // read data channel
+    wire [31:0] rdata;
+    wire [1:0] rresp;
+    wire rvalid;
+    reg rready;
+
+    // write address channel
+    reg [31:0] awaddr;
+    reg awvalid;
+    wire awready;
+
+    // write data channel
+    reg [31:0] wdata;
+    reg wvalid;
+    wire wready;
+
+    // write response
+    wire [1:0] bresp;
+    wire bvalid; 
+    reg bready;
 
     // Instantiate the FIFO module
-    ni my_ni (
-        .clk(clk),
-        .reset(reset),
-        .core_write_data(core_write_data),
-        .core_write_addr(core_write_addr),
-        .core_write_en(core_write_en),
-        .core_empty(core_empty),
-        .core_error(core_error),
-        .axi4_read_data(axi4_read_data),
-        .axi4_read_addr(axi4_read_addr),
-        .axi4_read_en(axi4_read_en),
-        .axi4_full(axi4_full),
-        .axi4_ocup(axi4_ocup)
+    axi4lite_slave my_slave (
+        clk,
+        arestn,
+        araddr,
+        arvalid,
+        arready,
+        rdata,
+        rresp,
+        rvalid,
+        rready,
+        awaddr,
+        awvalid,
+        awready,
+        wdata,
+        wvalid,
+        wready,
+        bresp,
+        bvalid, 
+        bready
     );
 
     // VCD dump file
     initial begin
-        $dumpfile("ni_tb.vcd");
-        $dumpvars(0, ni_tb);
-
-        // Initialize signals
+        $dumpfile("axi4slave_tb.vcd");
+        $dumpvars(0, axi4lite_slave_tb);
+        
+        //Initialize
         clk = 0;
-        reset = 1;
-        core_write_en = 1'b0;
-        axi4_read_en = 1'b0;
-        core_write_data = 32'h0;
-        core_write_data = 32'h0;
+        arestn = 0;
+        araddr = 32'h0;
+        arvalid = 1'b0;
+        rready = 1'b0;
+        awaddr = 32'h0;
+        awvalid = 1'b0;
+        wdata = 32'h0;
+        wvalid = 1'b0;
+        bready = 1'b0;
+ 
+        #10;
+        // write transaction
+        arestn = 1;
 
         #20;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        core_write_en = 1'b0;
-        core_write_data = 64'hA5A5A5A5A5A5A5A5; // Example data
-        #10;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        core_write_en = 1;
-        core_write_data = 64'hA5A5A5A5A5A5A5A5; // Example data
+        araddr = 32'h00000000;
+        arvalid = 1'b0;
+        rready = 1'b0;
+        awaddr = 32'hA5A5A5A5;
+        awvalid = 1'b1;
+        wdata = 32'hB5B5B5B5;
+        wvalid = 1'b1;
+        bready = 1'b1;
 
-        #10;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        core_write_en = 1;
-        core_write_data = 64'hA5A5A5A5A5A5A1A5; // Example data
+        #20;
+        araddr = 32'h00000000;
+        arvalid = 1'b0;
+        rready = 1'b0;
+        awaddr = 32'h00000000;
+        wdata = 32'h00000000;
 
-
-        #10;
-        core_write_en = 0;
-        // Read data from the FIFO
-        axi4_read_en = 1;
-
+        #40;
+        araddr = 32'hA5A5A5A5;
+        arvalid = 1'b1;
+        rready = 1'b1;
+        awaddr = 32'h0;
+        awvalid = 1'b0;
+        wdata = 32'h0;
+        wvalid = 1'b0;
+        bready = 1'b0;
+        
+        #40;
+        
         #10;
         // Perform additional read and write operations as needed
         // End simulation
@@ -80,7 +119,21 @@ module ni_tb();
 
     // Clock generation
     always begin
-        #5 clk = ~clk;
+        #10 clk = ~clk;
+    end
+
+    // axi master control 
+    always@(posedge clk)begin
+        if(bready && bvalid)
+            bready = 1'b0;
+        if(awvalid && awready)
+            awvalid = 1'b0;
+        if(wvalid && wready)
+            wvalid = 1'b0;
+        if(arvalid && arready)
+            arvalid = 1'b0;
+        if(rvalid && rready)
+            rready = 1'b0;
     end
 
 endmodule

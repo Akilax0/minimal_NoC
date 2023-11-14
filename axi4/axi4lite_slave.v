@@ -6,10 +6,10 @@ module axi4lite_slave(
     // read address channel
     input wire [31:0] araddr,
     input wire arvalid,
-    output wire arready,
+    output reg arready,
 
     // read data channel
-    output reg [31:0] rdata,
+    output wire [31:0] rdata,
     output wire [1:0] rresp,
     output reg rvalid,
     input wire rready,
@@ -27,7 +27,16 @@ module axi4lite_slave(
     // write response
     output wire [1:0] bresp,
     output reg bvalid, 
-    input wire bready
+    input wire bready,
+    
+    // For fifo access
+    output reg read_en,
+    input wire [31:0] read_data,
+    input wire empty,
+
+    output reg write_en,
+    output wire [63:0] write_data,
+    input wire full
 
 );
 
@@ -67,13 +76,15 @@ module axi4lite_slave(
     assign bresp = 2'b00;
     
 
-    assign arready = (arvalid && arready);
-
-
     initial	awready = 1'b0;
     initial	bvalid = 1'b0;
     initial rvalid = 1'b0;
+    initial arready = 1'b0;
 
+
+    assign write_data = {awaddr, wdata};
+    assign rdata =  read_data;
+    // write operation
     always @ (posedge aclk)begin
 
         if(reset)
@@ -84,35 +95,52 @@ module axi4lite_slave(
         end
         else if(wready)begin
             // write to FIFO        
+            write_en <= 1'b1;
             #2 bvalid <= 1'b1;
         end
         else if(bready && bvalid)
-            #2 bvalid <= 1'b0
-
+            #2 bvalid <= 1'b0;
+            write_en <= 1'b0;
+        
     end
     
     always @(posedge aclk)begin
         if(reset)
             awready <= 1'b0;
-        else
-            awready <= !awready && (awvalid && wvalid) && (!bvalid && bready);
+        else 
+            awready <= !awready 
+            && (awvalid && wvalid)
+            && (!bvalid || bready);
+    end
 
+
+    // read operation 
+    always@(posedge aclk)begin
+        if (reset)
+            arready =1'b0;
+        if (arvalid)
+            arready <= 1'b1;
+        if (arvalid && arready)begin
+            read_en <= 1'b1;
+            arready <= 1'b0;
+            rvalid <=1'b1;
+        end
+        if (rready && rvalid)begin
+            rvalid <= 1'b0;
+            read_en <= 1'b0;
+        end
     end
     
-    always @(*)begin
-        arready = !rvalid;
-    end
-    
-    always @(posedge aclk)begin
-        if(!rvalid || rready)
-            #2 rdata <= //fifo output ;
-        else if (rready)
-            #2 rvalid = 1'b1;
-
- 
-    end
 
 
+/*
+Instead of registers we are using fifo 
+disregards address as reg address or fifo address. 
+Can we use address to append to data and use the whole thing
+to be stored in the fifo
 
+Leaving strobe write out for this implementation
+
+*/
 
 endmodule

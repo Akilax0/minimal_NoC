@@ -1,5 +1,5 @@
 $date
-	Sun Nov  5 08:39:56 2023
+	Tue Nov 14 18:00:23 2023
 $end
 $version
 	Icarus Verilog
@@ -8,142 +8,213 @@ $timescale
 	1ps
 $end
 $scope module ni_tb $end
-$var wire 1 ! core_error $end
-$var wire 1 " core_empty $end
-$var wire 32 # axi4_read_data [31:0] $end
-$var wire 5 $ axi4_ocup [4:0] $end
-$var wire 1 % axi4_full $end
-$var reg 32 & axi4_read_addr [31:0] $end
-$var reg 1 ' axi4_read_en $end
-$var reg 1 ( clk $end
-$var reg 32 ) core_write_addr [31:0] $end
-$var reg 32 * core_write_data [31:0] $end
-$var reg 1 + core_write_en $end
-$var reg 1 , reset $end
+$var wire 32 ! core_read_data [31:0] $end
+$var reg 1 " clk $end
+$var reg 1 # core_read_en $end
+$var reg 32 $ core_write_addr [31:0] $end
+$var reg 32 % core_write_data [31:0] $end
+$var reg 1 & core_write_en $end
+$var reg 1 ' reset $end
 $scope module my_ni $end
-$var wire 32 - axi4_read_addr [31:0] $end
-$var wire 1 ' axi4_read_en $end
-$var wire 1 ( clk $end
-$var wire 32 . core_write_addr [31:0] $end
-$var wire 32 / core_write_data [31:0] $end
-$var wire 1 + core_write_en $end
-$var wire 1 , reset $end
-$var wire 1 ! core_error $end
-$var wire 1 " core_empty $end
-$var wire 32 0 axi4_read_data [31:0] $end
-$var wire 5 1 axi4_ocup [4:0] $end
-$var wire 1 % axi4_full $end
+$var wire 2 ( bresp [1:0] $end
+$var wire 1 " clk $end
+$var wire 1 # core_read_en $end
+$var wire 32 ) core_write_addr [31:0] $end
+$var wire 32 * core_write_data [31:0] $end
+$var wire 1 & core_write_en $end
+$var wire 1 ' reset $end
+$var wire 2 + rresp [1:0] $end
+$var wire 1 , write_en $end
+$var wire 64 - write_data [63:0] $end
+$var wire 1 . wready $end
+$var wire 1 / rvalid $end
+$var wire 1 0 read_en $end
+$var wire 32 1 read_data [31:0] $end
+$var wire 64 2 read64_data [63:0] $end
+$var wire 5 3 ocup [4:0] $end
+$var wire 1 4 full $end
+$var wire 1 5 error $end
+$var wire 1 6 empty $end
+$var wire 32 7 core_read_data [31:0] $end
+$var wire 1 8 bvalid $end
+$var wire 1 9 awready $end
+$var wire 1 : arready $end
+$var reg 1 ; arvalid $end
+$var reg 1 < awvalid $end
+$var reg 1 = bready $end
+$var reg 1 > rready $end
+$var reg 1 ? wvalid $end
+$scope module slave $end
+$var wire 1 " aclk $end
+$var wire 32 @ araddr [31:0] $end
+$var wire 1 A arestn $end
+$var wire 1 ; arvalid $end
+$var wire 32 B awaddr [31:0] $end
+$var wire 1 < awvalid $end
+$var wire 1 = bready $end
+$var wire 2 C bresp [1:0] $end
+$var wire 32 D rdata [31:0] $end
+$var wire 32 E read_data [31:0] $end
+$var wire 1 > rready $end
+$var wire 2 F rresp [1:0] $end
+$var wire 32 G wdata [31:0] $end
+$var wire 1 . wready $end
+$var wire 1 ? wvalid $end
+$var wire 64 H write_data [63:0] $end
+$var wire 1 I reset $end
+$var wire 1 4 full $end
+$var wire 1 6 empty $end
+$var reg 1 : arready $end
+$var reg 1 9 awready $end
+$var reg 1 8 bvalid $end
+$var reg 1 0 read_en $end
+$var reg 1 / rvalid $end
+$var reg 1 , write_en $end
+$upscope $end
 $scope module write_fifo $end
-$var wire 1 ( clk $end
-$var wire 64 2 data_in [63:0] $end
-$var wire 1 ' read_en $end
-$var wire 1 , reset $end
-$var wire 1 + write_en $end
-$var reg 64 3 data_out [63:0] $end
-$var reg 1 " empty $end
-$var reg 1 ! error $end
-$var reg 5 4 fifo_ocup [4:0] $end
-$var reg 1 % full $end
-$var reg 5 5 next_read_ptr [4:0] $end
-$var reg 5 6 next_write_ptr [4:0] $end
-$var reg 5 7 ocup [4:0] $end
-$var reg 5 8 read_ptr_ff [4:0] $end
-$var reg 5 9 write_ptr_ff [4:0] $end
-$var integer 32 : i [31:0] $end
+$var wire 1 " clk $end
+$var wire 64 J data_in [63:0] $end
+$var wire 1 0 read_en $end
+$var wire 1 ' reset $end
+$var wire 1 , write_en $end
+$var reg 64 K data_out [63:0] $end
+$var reg 1 6 empty $end
+$var reg 1 5 error $end
+$var reg 5 L fifo_ocup [4:0] $end
+$var reg 1 4 full $end
+$var reg 5 M next_read_ptr [4:0] $end
+$var reg 5 N next_write_ptr [4:0] $end
+$var reg 5 O ocup [4:0] $end
+$var reg 5 P read_ptr_ff [4:0] $end
+$var reg 5 Q write_ptr_ff [4:0] $end
+$var integer 32 R i [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b100000 :
-b0 9
-b0 8
+b100000 R
+b0 Q
+b0 P
+b0 O
+b0 N
+b0 M
+b0 L
+b0 K
+b0 J
+1I
+b0 H
+b0 G
+b0 F
+b0 E
+b0 D
+b0 C
+b0 B
+0A
+b0 @
+0?
+0>
+0=
+0<
+0;
+0:
+09
+08
 b0 7
-b0 6
-b0 5
-b0 4
+16
+x5
+04
 b0 3
 b0 2
 b0 1
-b0 0
-b0 /
-bx .
-bx -
-1,
-0+
+x0
+0/
+0.
+b0 -
+x,
+b0 +
 b0 *
-bx )
-0(
-0'
-bx &
-0%
-b0 $
-b0 #
-1"
-0!
-$end
-#5000
-b100000 :
-1(
-#10000
-0(
-#15000
-b100000 :
-1(
-#20000
-0(
-b10100101101001011010010110100101 2
-b10100101101001011010010110100101 *
-b10100101101001011010010110100101 /
-0,
-#25000
-1(
-#30000
-b1 6
-0(
-1+
-#35000
-b10100101101001011010010110100101 #
-b10100101101001011010010110100101 0
-b1 $
-b1 1
-b1 7
-b1 4
-b10 6
-b10100101101001011010010110100101 3
-0"
-b1 9
-1(
-#40000
-0(
-b10100101101001011010000110100101 2
-b10100101101001011010000110100101 *
-b10100101101001011010000110100101 /
-#45000
-b10 $
-b10 1
-b10 7
-b10 4
-b11 6
-b10 9
-1(
-#50000
-b1 5
-b10 6
-0(
+b0 )
+b0 (
 1'
-0+
-#55000
-b10100101101001011010000110100101 #
-b10100101101001011010000110100101 0
-b1 $
-b1 1
-b1 7
-b1 4
-b10 5
-b10100101101001011010000110100101 3
-b1 8
-1(
-#60000
-0(
+0&
+b0 %
+b0 $
+0#
+1"
+b0 !
+$end
+#4000
+0,
+#5000
+0"
+#10000
+b100000 R
+1"
+#15000
+0"
+#20000
+1.
+19
+1=
+1?
+1<
+1"
+b10101010101010101010101010101010 %
+b10101010101010101010101010101010 *
+b10101010101010101010101010101010 G
+b1010010110100101101001011010010110101010101010101010101010101010 -
+b1010010110100101101001011010010110101010101010101010101010101010 H
+b1010010110100101101001011010010110101010101010101010101010101010 J
+b10100101101001011010010110100101 $
+b10100101101001011010010110100101 )
+b10100101101001011010010110100101 B
+1&
+0I
+1A
+0'
+#25000
+0"
+#30000
+b1 N
+1,
+0.
+09
+0?
+0<
+1"
+#32000
+b0 N
+0,
+18
+#35000
+0"
+#40000
+1:
+0=
+1>
+1;
+1"
+b0 %
+b0 *
+b0 G
+b0 -
+b0 H
+b0 J
+b0 $
+b0 )
+b0 B
+1#
+0&
+#42000
+08
+#45000
+0"
+#50000
+15
+1/
+0:
+10
+1;
+1"
