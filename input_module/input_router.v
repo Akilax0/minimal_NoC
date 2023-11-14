@@ -21,7 +21,7 @@ DOES NOT ACCOUNT FOR SAME PORT JUST YET
 module input_router(
     input wire clk, 
     input wire reset,
-    input wire [7:0] flit;
+    input wire [9:0] flit;
     input wire [2:0] port;
     input wire [15:0] router_x;
     input wire [15:0] router_y;

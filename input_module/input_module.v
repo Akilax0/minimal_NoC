@@ -7,7 +7,7 @@ Descripton: input module that holds input router
 Assumption : read_en and write_en are synchronous
 
 VC buffers are 
-8 bit x 32 slots
+10 bit x 32 slots
 
 CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 */
@@ -22,10 +22,10 @@ CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 module input_module(
     input wire clk, 
     input wire reset, 
-    input wire [7:0] data_in;
+    input wire [9:0] data_in;
     input reg read_en;
     input reg write_en;
-    output wire [7:0] data_out; 
+    output wire [9:0] data_out; 
 );
 
     reg write_en_N, write_en_S, write_en_E, write_en_W;
@@ -35,7 +35,8 @@ module input_module(
     wire full_N,full_S,full_E,full_W;
     wire empty_N,empty_S,empty_E,empty_W;
     wire [4:0] ocup_N,ocup_S,ocup_E,ocup_W;
-    
+
+    // local port 
     wire full, empty, error;
     wire [4:0] ocup;
     
@@ -48,7 +49,7 @@ module input_module(
     
 
     // Handling data out
-    wire [7:0] data_N, data_S,data_E, data_W, data_L;
+    wire [9:0] data_N, data_S,data_E, data_W, data_L;
     
 
     // Need a router output to 
