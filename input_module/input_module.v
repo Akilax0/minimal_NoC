@@ -1,13 +1,17 @@
 /*
-
 File: input_module.v
 Descripton: input module that holds input router 
     and 4 VC buffers coresponding to the 4 other directions
     
 Assumption : read_en and write_en are synchronous
 
+Decided to go for 64bit (from 10 bit flits) packets rather than flit division 
+change this later on if congestion becomes a problem . 
+But considering Networks common packet size for all should 
+not be a problem - Akilax0
+
 VC buffers are 
-10 bit x 32 slots
+64 bit x 32 slots
 
 CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 */
@@ -15,17 +19,22 @@ CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 `include "input_router.v"
 `include "utils/vc_buffer.v"
 `include "utils/rr_arbiter.v"
-`include "utils/demux_1to4.v"
-`include "utils/mux_4to1.v"
-`include "utils/mux_4to1_8bit.v"
+`include "utils/demux_1to5.v"
+`include "utils/mux_5to1.v"
+`include "utils/mux_5to1_64bit.v"
 
 module input_module(
     input wire clk, 
     input wire reset, 
-    input wire [9:0] data_in;
+    input wire [63:0] data_in;
     input reg read_en;
     input reg write_en;
-    output wire [9:0] data_out; 
+    output wire [63:0] data_out; 
+
+    // input router calculations 
+    input wire [2:0] port;
+    input wire [15:0] router_x;
+    input wire [15:0] router_y;
 );
 
     reg write_en_N, write_en_S, write_en_E, write_en_W;
@@ -35,21 +44,17 @@ module input_module(
     wire full_N,full_S,full_E,full_W;
     wire empty_N,empty_S,empty_E,empty_W;
     wire [4:0] ocup_N,ocup_S,ocup_E,ocup_W;
-
-    // local port 
-    wire full, empty, error;
-    wire [4:0] ocup;
     
     wire [2:0] vc_select,rr_select;
 
     // for Local port
     reg write_en_L, read_en_L;
-    wire eror_L, full_L, empty_L;
+    wire error_L, full_L, empty_L;
     wire [4:0] ocup_L;
     
 
     // Handling data out
-    wire [9:0] data_N, data_S,data_E, data_W, data_L;
+    wire [63:0] data_N, data_S,data_E, data_W, data_L;
     
 
     // Need a router output to 
@@ -69,6 +74,7 @@ module input_module(
     `define E 3'b010
     `define W 3'b011
     `define L 3'b100
+    `define INVALID 3'b111
 
     input_router ir(
         clk, 
@@ -80,14 +86,14 @@ module input_module(
         vc_select;
     );
     
-    demux_1to4 write_en(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
-    demux_1to4 read_en(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
+    demux_1to5 write_en(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
+    demux_1to5 read_en(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
     
-    mux_4to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
-    mux_4to1 empty({empty_N,empty_S,empty_E,empty_W,empty_L},rr_select,empty);
-    mux_4to1 error({error_N,error_S,error_E,error_W,empty_L},rr_select,error);
+    mux_5to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
+    mux_5to1 empty({empty_N,empty_S,empty_E,empty_W,empty_L},rr_select,empty);
+    mux_5to1 error({error_N,error_S,error_E,error_W,empty_L},rr_select,error);
 
-    mux_4to1_8bit data(data_N,data_S,data_E,data_W,data_L,rr_select,data_out);
+    mux_5to1_64bit data(data_N,data_S,data_E,data_W,data_L,rr_select,data_out);
     
     // add  for ocup to check flow control
 
@@ -157,11 +163,11 @@ module input_module(
         ocup_L
     );
 
-    // check the behaviour here and remove comment 
+
     rr_arbiter arb(
       clk,
       reset,
-      input wire [3:0] request, // 5 request inputs
+      input wire [4:0] {!empty_L,!empty_W,!empty_E,!empty_S, !empty_N}, // 5 request inputs
       output reg [2:0] rr_select
     );
 

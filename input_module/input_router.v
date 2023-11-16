@@ -21,12 +21,14 @@ DOES NOT ACCOUNT FOR SAME PORT JUST YET
 module input_router(
     input wire clk, 
     input wire reset,
-    input wire [9:0] flit;
+    input wire [63:0] flit;
     input wire [2:0] port;
     input wire [15:0] router_x;
     input wire [15:0] router_y;
     output reg [2:0] vc_select;
 );
+
+    // Use the flit format if needed later on -> currently going for packet based switching
     // Flit format
     //  0 0 0 0 0 0 B1 B0
     // 11 - Head flit
@@ -38,18 +40,19 @@ module input_router(
     `define E 3'b010
     `define W 3'b011
     `define L 3'b100
+    `define INVALID 3'b111
     
     `define HEAD 2'b11
     
-    wire [2:0] dest_x,dest_y;
+    wire [15:0] dest_x,dest_y;
     
-    assign dest_x = flit[7:5]; 
-    assign dest_y = flit[4:2]; 
+    assign dest_x = flit[63:48]; 
+    assign dest_y = flit[47:32]; 
 
 
     // XY algorithm 
     always @ (*)begin
-        if ( flit[1:0] == `HEAD  )begin
+        // if ( flit[1:0] == `HEAD  )begin
             if (dest_x == router_x && dest_y == router_y)begin
                 vc_select = `L;
             end
@@ -69,7 +72,11 @@ module input_router(
                     vc_select = `N;
                 end
             end
-        end
+
+            // check if this works to avoid packets be sending back to source 
+            if(vc_select == port && dest_x == router_x && dest_y == router_y)
+                vc_select = INVALID;
+        // end
     end
 
     // // YX algorithm 

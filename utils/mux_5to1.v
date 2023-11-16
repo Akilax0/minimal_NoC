@@ -1,4 +1,4 @@
-module mux_4to1 (
+module mux_5to1 (
   input wire [0:4] data_inputs, // 4 input lines
   input wire [2:0] ctrl,        // 2-bit control signal
   output wire mux_output

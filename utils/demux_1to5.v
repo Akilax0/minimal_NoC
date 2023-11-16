@@ -1,4 +1,4 @@
-module demux_1to4 (
+module demux_1to5 (
   input wire data_input,  // Input data to be demultiplexed
   input wire [2:0] ctrl,        // Control signal to select an output
   output wire out0,       // Demuxed output 0

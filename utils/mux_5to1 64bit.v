@@ -1,10 +1,10 @@
-module mux_4to1_8bit(
-  input wire [7:0] data_N,
-  input wire [7:0] data_S,
-  input wire [7:0] data_E,
-  input wire [7:0] data_W,
-  input wire [7:0] data_L,
-  input wire [2:0] ctrl,        // 2-bit control signal
+module mux_5to1_64bit(
+  input wire [63:0] data_N,
+  input wire [63:0] data_S,
+  input wire [63:0] data_E,
+  input wire [63:0] data_W,
+  input wire [63:0] data_L,
+  input wire [2:0] ctrl,        // 3-bit control signal
   output wire mux_output
 );
 
