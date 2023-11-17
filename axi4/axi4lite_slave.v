@@ -30,11 +30,11 @@ module axi4lite_slave(
     input wire bready,
     
     // For fifo access
-    output reg read_en,
+    output wire read_en,
     input wire [31:0] read_data,
     input wire empty,
 
-    output reg write_en,
+    output wire write_en,
     output wire [63:0] write_data,
     input wire full
 
@@ -74,12 +74,16 @@ module axi4lite_slave(
 
     assign rresp = 2'b00;
     assign bresp = 2'b00;
-    
+
+
+    assign write_en = bvalid; 
+    assign read_en = rvalid;
 
     initial	awready = 1'b0;
     initial	bvalid = 1'b0;
     initial rvalid = 1'b0;
     initial arready = 1'b0;
+
 
 
     assign write_data = {awaddr, wdata};
@@ -89,18 +93,16 @@ module axi4lite_slave(
 
         if(reset)
         begin
-            #2 bvalid <= 1'b0;
-            #2 rvalid <=1'b0; 
+            bvalid <= 1'b0;
+            rvalid <=1'b0; 
             // Clear FIFO
         end
         else if(wready)begin
             // write to FIFO        
-            write_en <= 1'b1;
-            #2 bvalid <= 1'b1;
+            bvalid <= 1'b1;
         end
         else if(bready && bvalid)
-            #2 bvalid <= 1'b0;
-            write_en <= 1'b0;
+            bvalid <= 1'b0;
         
     end
     
@@ -116,18 +118,17 @@ module axi4lite_slave(
 
     // read operation 
     always@(posedge aclk)begin
-        if (reset)
+        if (reset)begin
             arready =1'b0;
+        end
         if (arvalid)
             arready <= 1'b1;
         if (arvalid && arready)begin
-            read_en <= 1'b1;
             arready <= 1'b0;
             rvalid <=1'b1;
         end
-        if (rready && rvalid)begin
+        else if (rready && rvalid)begin
             rvalid <= 1'b0;
-            read_en <= 1'b0;
         end
     end
     

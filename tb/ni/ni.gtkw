@@ -1,0 +1,81 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Fri Nov 17 04:27:29 2023
+[*]
+[dumpfile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/ni/ni_tb.vcd"
+[dumpfile_mtime] "Fri Nov 17 04:24:09 2023"
+[dumpfile_size] 3678
+[savefile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/ni/ni.gtkw"
+[timestart] 0
+[size] 1920 1011
+[pos] -1 -1
+*-13.000000 36120 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ni_tb.
+[treeopen] ni_tb.my_ni.
+[sst_width] 221
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 287
+@28
+ni_tb.clk
+ni_tb.reset
+@200
+-ni
+@22
+ni_tb.core_read_data[31:0]
+@28
+ni_tb.core_read_en
+@22
+ni_tb.core_write_addr[31:0]
+ni_tb.core_write_data[31:0]
+@28
+ni_tb.core_write_en
+@22
+ni_tb.core_read_data[31:0]
+@200
+-slave
+@22
+ni_tb.my_ni.slave.araddr[31:0]
+@28
+ni_tb.my_ni.slave.arready
+ni_tb.my_ni.slave.arvalid
+@22
+ni_tb.my_ni.slave.awaddr[31:0]
+@28
+ni_tb.my_ni.slave.awready
+ni_tb.my_ni.slave.awvalid
+ni_tb.my_ni.slave.bready
+ni_tb.my_ni.slave.bresp[1:0]
+ni_tb.my_ni.slave.bvalid
+@22
+ni_tb.my_ni.slave.rdata[31:0]
+ni_tb.my_ni.slave.rdata[31:0]
+ni_tb.my_ni.slave.read_data[31:0]
+@28
+ni_tb.my_ni.slave.read_en
+@22
+ni_tb.my_ni.slave.wdata[31:0]
+@28
+ni_tb.my_ni.slave.wready
+@22
+ni_tb.my_ni.slave.write_data[63:0]
+@28
+ni_tb.my_ni.slave.write_en
+ni_tb.my_ni.slave.wvalid
+@200
+-fifo
+@22
+ni_tb.my_ni.write_fifo.data_in[63:0]
+ni_tb.my_ni.write_fifo.data_out[63:0]
+@28
+ni_tb.my_ni.write_fifo.empty
+ni_tb.my_ni.write_fifo.error
+ni_tb.my_ni.write_fifo.full
+@22
+ni_tb.my_ni.write_fifo.ocup[4:0]
+@28
+ni_tb.my_ni.write_fifo.write_en
+@29
+ni_tb.my_ni.write_fifo.read_en
+[pattern_trace] 1
+[pattern_trace] 0

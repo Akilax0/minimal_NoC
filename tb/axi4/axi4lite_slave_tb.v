@@ -38,6 +38,15 @@ module axi4lite_slave_tb();
     wire [1:0] bresp;
     wire bvalid; 
     reg bready;
+    
+    // fifo 
+    wire read_en;
+    reg [31:0] read_data;
+    reg empty;
+
+    wire write_en;
+    wire [63:0] write_data;
+    reg full;
 
     // Instantiate the FIFO module
     axi4lite_slave my_slave (
@@ -58,7 +67,13 @@ module axi4lite_slave_tb();
         wready,
         bresp,
         bvalid, 
-        bready
+        bready,
+        read_en,
+        read_data,
+        empty,
+        write_en,
+        write_data,
+        full
     );
 
     // VCD dump file
@@ -67,7 +82,7 @@ module axi4lite_slave_tb();
         $dumpvars(0, axi4lite_slave_tb);
         
         //Initialize
-        clk = 0;
+        clk = 1;
         arestn = 0;
         araddr = 32'h0;
         arvalid = 1'b0;
@@ -77,6 +92,10 @@ module axi4lite_slave_tb();
         wdata = 32'h0;
         wvalid = 1'b0;
         bready = 1'b0;
+
+        read_data = 32'h0;
+        empty = 1'b0;
+        full = 1'b0;
  
         #10;
         // write transaction
@@ -98,18 +117,9 @@ module axi4lite_slave_tb();
         rready = 1'b0;
         awaddr = 32'h00000000;
         wdata = 32'h00000000;
-
-        #40;
-        araddr = 32'hA5A5A5A5;
-        arvalid = 1'b1;
-        rready = 1'b1;
-        awaddr = 32'h0;
-        awvalid = 1'b0;
-        wdata = 32'h0;
-        wvalid = 1'b0;
-        bready = 1'b0;
         
         #40;
+
         
         #10;
         // Perform additional read and write operations as needed
@@ -119,7 +129,7 @@ module axi4lite_slave_tb();
 
     // Clock generation
     always begin
-        #10 clk = ~clk;
+        #5 clk = ~clk;
     end
 
     // axi master control 

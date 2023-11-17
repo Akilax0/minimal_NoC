@@ -44,14 +44,14 @@ module ni_tb();
         core_write_addr = 32'hA5A5A5A5;
         core_write_data = 32'hAAAAAAAA;
 
-        #20;
+        #40;
 
-        // Release reset
         core_write_en = 1'b0;
         core_read_en = 1'b1;
         core_write_addr = 32'h0;
         core_write_data = 32'h0;
 
+        #40;
 
         #10;
         // Perform additional read and write operations as needed

@@ -1,5 +1,5 @@
 $date
-	Tue Nov 14 18:00:23 2023
+	Fri Nov 17 10:51:17 2023
 $end
 $version
 	Icarus Verilog
@@ -55,10 +55,12 @@ $var wire 1 = bready $end
 $var wire 2 C bresp [1:0] $end
 $var wire 32 D rdata [31:0] $end
 $var wire 32 E read_data [31:0] $end
+$var wire 1 0 read_en $end
 $var wire 1 > rready $end
 $var wire 2 F rresp [1:0] $end
 $var wire 32 G wdata [31:0] $end
 $var wire 1 . wready $end
+$var wire 1 , write_en $end
 $var wire 1 ? wvalid $end
 $var wire 64 H write_data [63:0] $end
 $var wire 1 I reset $end
@@ -67,9 +69,7 @@ $var wire 1 6 empty $end
 $var reg 1 : arready $end
 $var reg 1 9 awready $end
 $var reg 1 8 bvalid $end
-$var reg 1 0 read_en $end
 $var reg 1 / rvalid $end
-$var reg 1 , write_en $end
 $upscope $end
 $scope module write_fifo $end
 $var wire 1 " clk $end
@@ -80,13 +80,13 @@ $var wire 1 , write_en $end
 $var reg 64 K data_out [63:0] $end
 $var reg 1 6 empty $end
 $var reg 1 5 error $end
-$var reg 5 L fifo_ocup [4:0] $end
+$var reg 6 L fifo_ocup [5:0] $end
 $var reg 1 4 full $end
-$var reg 5 M next_read_ptr [4:0] $end
-$var reg 5 N next_write_ptr [4:0] $end
+$var reg 6 M next_read_ptr [5:0] $end
+$var reg 6 N next_write_ptr [5:0] $end
 $var reg 5 O ocup [4:0] $end
-$var reg 5 P read_ptr_ff [4:0] $end
-$var reg 5 Q write_ptr_ff [4:0] $end
+$var reg 6 P read_ptr_ff [5:0] $end
+$var reg 6 Q write_ptr_ff [5:0] $end
 $var integer 32 R i [31:0] $end
 $upscope $end
 $upscope $end
@@ -123,16 +123,16 @@ b0 @
 08
 b0 7
 16
-x5
+05
 04
 b0 3
 b0 2
 b0 1
-x0
+00
 0/
 0.
 b0 -
-x,
+0,
 b0 +
 b0 *
 b0 )
@@ -145,8 +145,6 @@ b0 $
 1"
 b0 !
 $end
-#4000
-0,
 #5000
 0"
 #10000
@@ -178,21 +176,52 @@ b10100101101001011010010110100101 B
 0"
 #30000
 b1 N
-1,
 0.
 09
+1,
+18
 0?
 0<
 1"
-#32000
-b0 N
-0,
-18
 #35000
 0"
 #40000
-1:
+b10101010101010101010101010101010 !
+b10101010101010101010101010101010 7
+b10101010101010101010101010101010 D
+b10101010101010101010101010101010 1
+b10101010101010101010101010101010 E
+b1 3
+b1 O
+b1 L
+b10 N
+b1010010110100101101001011010010110101010101010101010101010101010 2
+b1010010110100101101001011010010110101010101010101010101010101010 K
+06
+b1 Q
 0=
+1?
+1<
+1"
+#45000
+0"
+#50000
+b10 3
+b10 O
+b10 L
+b11 N
+b10 Q
+0=
+1"
+#55000
+0"
+#60000
+b11 3
+b11 O
+b11 L
+b100 N
+1:
+b11 Q
 1>
 1;
 1"
@@ -207,14 +236,66 @@ b0 )
 b0 B
 1#
 0&
-#42000
-08
-#45000
+#65000
 0"
-#50000
-15
+#70000
+b100 3
+b100 O
+b100 L
+b1 M
+b101 N
+10
 1/
 0:
-10
+b100 Q
+1;
+1"
+#75000
+0"
+#80000
+b10 M
+b110 N
+1:
+b1 P
+b101 Q
+0>
+1"
+#85000
+0"
+#90000
+b0 !
+b0 7
+b0 D
+b0 1
+b0 E
+b11 M
+b111 N
+b0 2
+b0 K
+0:
+b10 P
+b110 Q
+1>
+1;
+1"
+#95000
+0"
+#100000
+b100 M
+b1000 N
+1:
+b11 P
+b111 Q
+0>
+1"
+#105000
+0"
+#110000
+b101 M
+b1001 N
+0:
+b100 P
+b1000 Q
+1>
 1;
 1"

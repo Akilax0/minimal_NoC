@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "../../ni/gp_fifo.v"
+`include "../../fifo/gp_fifo.v"
 
 module gp_fifo_tb();
 
@@ -35,37 +35,37 @@ module gp_fifo_tb();
         $dumpvars(0, gp_fifo_tb);
 
         // Initialize signals
-        clk = 0;
+        clk = 1;
         reset = 1;
         write_en = 1'b0;
         read_en = 1'b0;
         data_in = 64'h0;
 
-        #20;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        write_en = 1'b0;
-        data_in = 64'hA5A5A5A5A5A5A5A5; // Example data
-        #10;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        write_en = 1;
-        data_in = 64'hA5A5A5A5A5A5A5A5; // Example data
+
+
 
         #10;
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
         write_en = 1;
+        data_in = 64'hA5A5A5A5A5A5A5A5; // Example data
+        
+        #1
+        write_en = 0;
+
+        #10;
+        // Release reset
+        reset = 1'b0;
+        // Write data to the FIFO
+        write_en = 0;
         data_in = 64'hA5A5A5A5A5A5A1A5; // Example data
 
         #10;
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
-        write_en = 1;
+        write_en = 0;
         data_in = 64'hA5A5A5A5A5A5A4A5; // Example data
 
         #10;

@@ -24,7 +24,7 @@ module gp_fifo(
 );
 
     // this is one less than MSB (32bit -> 5 )
-    `define MSB_SLOT 4
+    `define MSB_SLOT 5
 
     reg [63:0] fifo_ff [31:0]; 
     reg [`MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
