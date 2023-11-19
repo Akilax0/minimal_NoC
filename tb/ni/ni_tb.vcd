@@ -1,5 +1,5 @@
 $date
-	Fri Nov 17 10:51:17 2023
+	Sun Nov 19 12:05:39 2023
 $end
 $version
 	Icarus Verilog
@@ -15,86 +15,344 @@ $var reg 32 $ core_write_addr [31:0] $end
 $var reg 32 % core_write_data [31:0] $end
 $var reg 1 & core_write_en $end
 $var reg 1 ' reset $end
+$var integer 32 ( i [31:0] $end
 $scope module my_ni $end
-$var wire 2 ( bresp [1:0] $end
+$var wire 2 ) bresp [1:0] $end
 $var wire 1 " clk $end
 $var wire 1 # core_read_en $end
-$var wire 32 ) core_write_addr [31:0] $end
-$var wire 32 * core_write_data [31:0] $end
+$var wire 32 * core_write_addr [31:0] $end
+$var wire 32 + core_write_data [31:0] $end
 $var wire 1 & core_write_en $end
 $var wire 1 ' reset $end
-$var wire 2 + rresp [1:0] $end
-$var wire 1 , write_en $end
-$var wire 64 - write_data [63:0] $end
-$var wire 1 . wready $end
-$var wire 1 / rvalid $end
-$var wire 1 0 read_en $end
-$var wire 32 1 read_data [31:0] $end
-$var wire 64 2 read64_data [63:0] $end
-$var wire 5 3 ocup [4:0] $end
-$var wire 1 4 full $end
-$var wire 1 5 error $end
-$var wire 1 6 empty $end
-$var wire 32 7 core_read_data [31:0] $end
-$var wire 1 8 bvalid $end
-$var wire 1 9 awready $end
-$var wire 1 : arready $end
-$var reg 1 ; arvalid $end
-$var reg 1 < awvalid $end
-$var reg 1 = bready $end
-$var reg 1 > rready $end
-$var reg 1 ? wvalid $end
+$var wire 2 , rresp [1:0] $end
+$var wire 1 - write_en $end
+$var wire 64 . write_data [63:0] $end
+$var wire 1 / wready $end
+$var wire 1 0 rvalid $end
+$var wire 1 1 read_en $end
+$var wire 32 2 read_data [31:0] $end
+$var wire 64 3 read64_data [63:0] $end
+$var wire 5 4 ocup [4:0] $end
+$var wire 1 5 full $end
+$var wire 1 6 error $end
+$var wire 1 7 empty $end
+$var wire 32 8 core_read_data [31:0] $end
+$var wire 1 9 bvalid $end
+$var wire 1 : awready $end
+$var wire 1 ; arready $end
+$var reg 1 < arvalid $end
+$var reg 1 = awvalid $end
+$var reg 1 > bready $end
+$var reg 1 ? rready $end
+$var reg 1 @ wvalid $end
 $scope module slave $end
 $var wire 1 " aclk $end
-$var wire 32 @ araddr [31:0] $end
-$var wire 1 A arestn $end
-$var wire 1 ; arvalid $end
-$var wire 32 B awaddr [31:0] $end
-$var wire 1 < awvalid $end
-$var wire 1 = bready $end
-$var wire 2 C bresp [1:0] $end
-$var wire 32 D rdata [31:0] $end
-$var wire 32 E read_data [31:0] $end
-$var wire 1 0 read_en $end
-$var wire 1 > rready $end
-$var wire 2 F rresp [1:0] $end
-$var wire 32 G wdata [31:0] $end
-$var wire 1 . wready $end
-$var wire 1 , write_en $end
-$var wire 1 ? wvalid $end
-$var wire 64 H write_data [63:0] $end
-$var wire 1 I reset $end
-$var wire 1 4 full $end
-$var wire 1 6 empty $end
-$var reg 1 : arready $end
-$var reg 1 9 awready $end
-$var reg 1 8 bvalid $end
-$var reg 1 / rvalid $end
+$var wire 32 A araddr [31:0] $end
+$var wire 1 B arestn $end
+$var wire 1 < arvalid $end
+$var wire 32 C awaddr [31:0] $end
+$var wire 1 = awvalid $end
+$var wire 1 > bready $end
+$var wire 2 D bresp [1:0] $end
+$var wire 32 E rdata [31:0] $end
+$var wire 32 F read_data [31:0] $end
+$var wire 1 1 read_en $end
+$var wire 1 ? rready $end
+$var wire 2 G rresp [1:0] $end
+$var wire 32 H wdata [31:0] $end
+$var wire 1 / wready $end
+$var wire 1 - write_en $end
+$var wire 1 @ wvalid $end
+$var wire 64 I write_data [63:0] $end
+$var wire 1 J reset $end
+$var wire 1 5 full $end
+$var wire 1 7 empty $end
+$var reg 1 ; arready $end
+$var reg 1 : awready $end
+$var reg 1 9 bvalid $end
+$var reg 1 0 rvalid $end
 $upscope $end
 $scope module write_fifo $end
 $var wire 1 " clk $end
-$var wire 64 J data_in [63:0] $end
-$var wire 1 0 read_en $end
+$var wire 64 K data_in [63:0] $end
+$var wire 1 1 read_en $end
 $var wire 1 ' reset $end
-$var wire 1 , write_en $end
-$var reg 64 K data_out [63:0] $end
-$var reg 1 6 empty $end
-$var reg 1 5 error $end
-$var reg 6 L fifo_ocup [5:0] $end
-$var reg 1 4 full $end
-$var reg 6 M next_read_ptr [5:0] $end
-$var reg 6 N next_write_ptr [5:0] $end
-$var reg 5 O ocup [4:0] $end
-$var reg 6 P read_ptr_ff [5:0] $end
-$var reg 6 Q write_ptr_ff [5:0] $end
-$var integer 32 R i [31:0] $end
+$var wire 1 - write_en $end
+$var reg 64 L data_out [63:0] $end
+$var reg 1 7 empty $end
+$var reg 1 6 error $end
+$var reg 6 M fifo_ocup [5:0] $end
+$var reg 1 5 full $end
+$var reg 6 N next_read_ptr [5:0] $end
+$var reg 6 O next_write_ptr [5:0] $end
+$var reg 5 P ocup [4:0] $end
+$var reg 6 Q read_ptr_ff [5:0] $end
+$var reg 6 R write_ptr_ff [5:0] $end
+$var integer 32 S i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 T \fifo_ff[0] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 U \fifo_ff[1] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 V \fifo_ff[2] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 W \fifo_ff[3] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 X \fifo_ff[4] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 Y \fifo_ff[5] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 Z \fifo_ff[6] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 [ \fifo_ff[7] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 \ \fifo_ff[8] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 ] \fifo_ff[9] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 ^ \fifo_ff[10] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 _ \fifo_ff[11] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 ` \fifo_ff[12] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 a \fifo_ff[13] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 b \fifo_ff[14] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 c \fifo_ff[15] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 d \fifo_ff[16] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 e \fifo_ff[17] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 f \fifo_ff[18] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 g \fifo_ff[19] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 h \fifo_ff[20] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 i \fifo_ff[21] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 j \fifo_ff[22] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 k \fifo_ff[23] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 l \fifo_ff[24] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 m \fifo_ff[25] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 n \fifo_ff[26] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 o \fifo_ff[27] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 p \fifo_ff[28] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 q \fifo_ff[29] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 r \fifo_ff[30] [63:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module ni_tb $end
+$scope module my_ni $end
+$scope module write_fifo $end
+$var reg 64 s \fifo_ff[31] [63:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b100000 R
+b0 s
+b0 r
+b0 q
+b0 p
+b0 o
+b0 n
+b0 m
+b0 l
+b0 k
+b0 j
+b0 i
+b0 h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b0 \
+b0 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b100000 S
+b0 R
 b0 Q
 b0 P
 b0 O
@@ -102,17 +360,17 @@ b0 N
 b0 M
 b0 L
 b0 K
-b0 J
-1I
+1J
+b0 I
 b0 H
 b0 G
 b0 F
 b0 E
 b0 D
 b0 C
-b0 B
-0A
-b0 @
+0B
+b0 A
+0@
 0?
 0>
 0=
@@ -120,23 +378,23 @@ b0 @
 0;
 0:
 09
-08
-b0 7
-16
+b0 8
+17
+06
 05
-04
+b0 4
 b0 3
 b0 2
-b0 1
+01
 00
 0/
-0.
-b0 -
-0,
+b0 .
+0-
+b0 ,
 b0 +
 b0 *
 b0 )
-b0 (
+b100000 (
 1'
 0&
 b0 %
@@ -148,154 +406,167 @@ $end
 #5000
 0"
 #10000
-b100000 R
+b0 s
+b0 r
+b0 q
+b0 p
+b0 o
+b0 n
+b0 m
+b0 l
+b0 k
+b0 j
+b0 i
+b0 h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b0 \
+b0 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b100000 S
 1"
 #15000
 0"
 #20000
-1.
-19
+1/
+1:
+1>
+1@
 1=
-1?
-1<
 1"
 b10101010101010101010101010101010 %
-b10101010101010101010101010101010 *
-b10101010101010101010101010101010 G
-b1010010110100101101001011010010110101010101010101010101010101010 -
-b1010010110100101101001011010010110101010101010101010101010101010 H
-b1010010110100101101001011010010110101010101010101010101010101010 J
+b10101010101010101010101010101010 +
+b10101010101010101010101010101010 H
+b1010010110100101101001011010010110101010101010101010101010101010 .
+b1010010110100101101001011010010110101010101010101010101010101010 I
+b1010010110100101101001011010010110101010101010101010101010101010 K
 b10100101101001011010010110100101 $
-b10100101101001011010010110100101 )
-b10100101101001011010010110100101 B
+b10100101101001011010010110100101 *
+b10100101101001011010010110100101 C
 1&
-0I
-1A
+0J
+1B
 0'
 #25000
 0"
 #30000
-b1 N
-0.
-09
-1,
-18
-0?
-0<
+b1 O
+0/
+0:
+1-
+19
+0@
+0=
 1"
 #35000
 0"
 #40000
-b10101010101010101010101010101010 !
-b10101010101010101010101010101010 7
-b10101010101010101010101010101010 D
-b10101010101010101010101010101010 1
-b10101010101010101010101010101010 E
-b1 3
-b1 O
-b1 L
-b10 N
-b1010010110100101101001011010010110101010101010101010101010101010 2
-b1010010110100101101001011010010110101010101010101010101010101010 K
-06
-b1 Q
-0=
+b1 4
+b1 P
+b1 M
+07
+0-
+09
+1;
+b0 T
+b1 R
 1?
 1<
 1"
+b0 %
+b0 +
+b0 H
+b0 .
+b0 I
+b0 K
+b0 $
+b0 *
+b0 C
+1#
+0&
+#42000
+0<
+0>
 #45000
 0"
 #50000
-b10 3
-b10 O
-b10 L
-b11 N
-b10 Q
-0=
+b1 N
+11
+10
+0;
+1<
 1"
 #55000
 0"
 #60000
-b11 3
-b11 O
-b11 L
-b100 N
-1:
-b11 Q
-1>
-1;
+b0 4
+b0 P
+b0 M
+17
+b0 O
+b0 N
+01
+00
+b0 s
+b0 r
+b0 q
+b0 p
+b0 o
+b0 n
+b0 m
+b0 l
+b0 k
+b0 j
+b0 i
+b0 h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b0 \
+b0 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b0 R
+0?
+0<
+b100000 S
 1"
-b0 %
-b0 *
-b0 G
-b0 -
-b0 H
-b0 J
-b0 $
-b0 )
-b0 B
-1#
-0&
+0#
+1J
+0B
+1'
 #65000
 0"
 #70000
-b100 3
-b100 O
-b100 L
-b1 M
-b101 N
-10
-1/
-0:
-b100 Q
-1;
 1"
-#75000
-0"
-#80000
-b10 M
-b110 N
-1:
-b1 P
-b101 Q
-0>
-1"
-#85000
-0"
-#90000
-b0 !
-b0 7
-b0 D
-b0 1
-b0 E
-b11 M
-b111 N
-b0 2
-b0 K
-0:
-b10 P
-b110 Q
-1>
-1;
-1"
-#95000
-0"
-#100000
-b100 M
-b1000 N
-1:
-b11 P
-b111 Q
-0>
-1"
-#105000
-0"
-#110000
-b101 M
-b1001 N
-0:
-b100 P
-b1000 Q
-1>
-1;
-1"
+0J
+1B
+0'

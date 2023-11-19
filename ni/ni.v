@@ -1,4 +1,3 @@
-`include "../../axi4/axi4lite_master.v"
 `include "../../axi4/axi4lite_slave.v"
 `include "../../fifo/gp_fifo.v"
 
@@ -99,7 +98,7 @@ module ni(
             bready = 1'b1;
         end
         if(bready && bvalid)
-            bready = 1'b0;
+            #2 bready = 1'b0;
         if(awvalid && awready)
             awvalid = 1'b0;
         if(wvalid && wready)

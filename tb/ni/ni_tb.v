@@ -22,10 +22,13 @@ module ni_tb();
         .core_read_en(core_read_en)
     );
 
+    integer i;
     // VCD dump file
     initial begin
         $dumpfile("ni_tb.vcd");
         $dumpvars(0, ni_tb);
+        for(i = 0; i < 32; i = i + 1)
+            $dumpvars(1, ni_tb.my_ni.write_fifo.fifo_ff[i]);
 
         // Initialize signals
         clk = 1;
@@ -44,16 +47,22 @@ module ni_tb();
         core_write_addr = 32'hA5A5A5A5;
         core_write_data = 32'hAAAAAAAA;
 
-        #40;
+        #20;
 
         core_write_en = 1'b0;
         core_read_en = 1'b1;
         core_write_addr = 32'h0;
         core_write_data = 32'h0;
 
-        #40;
+        #20;
+        reset = 1;
+        core_write_en = 1'b0;
+        core_read_en = 1'b0;
+        core_write_addr = 32'h0;
+        core_write_data = 32'h0;
 
         #10;
+        reset = 0;
         // Perform additional read and write operations as needed
         // End simulation
         $finish;

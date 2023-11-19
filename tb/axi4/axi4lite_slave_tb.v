@@ -118,8 +118,17 @@ module axi4lite_slave_tb();
         awaddr = 32'h00000000;
         wdata = 32'h00000000;
         
-        #40;
+        #20;
+        araddr = 32'hA5A5A5A5;
+        arvalid = 1'b1;
+        rready = 1'b1;
+        awaddr = 32'h00000000;
+        awvalid = 1'b0;
+        wdata = 32'h00000000;
+        wvalid = 1'b0;
+        bready = 1'b0;
 
+        #40;
         
         #10;
         // Perform additional read and write operations as needed
@@ -135,7 +144,7 @@ module axi4lite_slave_tb();
     // axi master control 
     always@(posedge clk)begin
         if(bready && bvalid)
-            bready = 1'b0;
+            #2 bready = 1'b0;
         if(awvalid && awready)
             awvalid = 1'b0;
         if(wvalid && wready)

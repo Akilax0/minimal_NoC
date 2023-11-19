@@ -1,3 +1,15 @@
+/*
+
+File: axi4lite_slave.v
+Description: AXI4 lite slave interface to handle data 
+    reads and writes in the Network interface. The interface allows for a 
+    more general protocol to access the FIFO buffers used for reads and writes 
+    in the NI. 
+
+
+
+*/
+
 module axi4lite_slave(
     
     input wire aclk,
@@ -46,8 +58,6 @@ module axi4lite_slave(
     // 0b10 - SLVERR
     // 0b11 - DECERR
 
-
-
     /* Hanlding Write operation from Master
 
     - Master Puts data and address and asserts AWVALID, WVALID, BREADY
@@ -56,8 +66,6 @@ module axi4lite_slave(
     - Deassert both in BVALID and BREADY are high
 
     */
-
-
 
     /* Handling Read operation from Master
 
@@ -75,7 +83,6 @@ module axi4lite_slave(
     assign rresp = 2'b00;
     assign bresp = 2'b00;
 
-
     assign write_en = bvalid; 
     assign read_en = rvalid;
 
@@ -86,20 +93,22 @@ module axi4lite_slave(
 
     assign write_data = {awaddr, wdata};
     assign rdata =  read_data;
+    
+    // assign arready = arvalid;
+
     // write operation
     always @ (posedge aclk)begin
 
         if(reset)
         begin
             bvalid <= 1'b0;
-            rvalid <=1'b0; 
             // Clear FIFO
         end
         else if(wready)begin
             // write to FIFO        
             bvalid <= 1'b1;
         end
-        else if(bready && bvalid)
+        else if(bready)//!bvalid
             bvalid <= 1'b0;
         
     end
@@ -118,14 +127,15 @@ module axi4lite_slave(
     always@(posedge aclk)begin
         if (reset)begin
             arready =1'b0;
+            rvalid <=1'b0; 
         end
-        if (arvalid)
+        if (arvalid && !arready)
             arready <= 1'b1;
-        if (arvalid && arready)begin
+        if (arready)begin
             arready <= 1'b0;
             rvalid <=1'b1;
         end
-        else if (rready && rvalid)begin
+        if (rready && rvalid)begin
             rvalid <= 1'b0;
         end
     end
