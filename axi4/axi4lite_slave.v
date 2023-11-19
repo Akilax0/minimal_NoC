@@ -84,8 +84,6 @@ module axi4lite_slave(
     initial rvalid = 1'b0;
     initial arready = 1'b0;
 
-
-
     assign write_data = {awaddr, wdata};
     assign rdata =  read_data;
     // write operation
