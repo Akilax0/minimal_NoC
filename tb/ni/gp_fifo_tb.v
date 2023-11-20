@@ -41,9 +41,6 @@ module gp_fifo_tb();
         read_en = 1'b0;
         data_in = 64'h0;
 
-
-
-
         #10;
         // Release reset
         reset = 1'b0;
@@ -68,11 +65,22 @@ module gp_fifo_tb();
         write_en = 0;
         // Read data from the FIFO
         read_en = 1;
-        
+
+
         #10;
         read_en = 1;
         write_en = 1;
         data_in = 64'h00010001CCCCCCCC; // Example data
+
+        #10;
+        write_en = 0;
+        // Read data from the FIFO
+        read_en = 1;
+
+        #10;
+        write_en = 0;
+        // Read data from the FIFO
+        read_en = 1;
 
         #10;
         read_en = 0;

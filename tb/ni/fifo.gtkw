@@ -1,20 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.114 (w)1999-2023 BSI
-[*] Mon Nov 20 08:39:59 2023
+[*] Mon Nov 20 15:30:24 2023
 [*]
 [dumpfile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/ni/gp_fifo_tb.vcd"
-[dumpfile_mtime] "Mon Nov 20 07:42:45 2023"
-[dumpfile_size] 2179
+[dumpfile_mtime] "Mon Nov 20 15:13:56 2023"
+[dumpfile_size] 2392
 [savefile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/ni/fifo.gtkw"
-[timestart] 24650
+[timestart] 21340
 [size] 1366 694
 [pos] -1 -1
-*-13.800000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-13.800000 49860 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] gp_fifo_tb.
 [sst_width] 278
-[signals_width] 182
+[signals_width] 228
 [sst_expanded] 1
-[sst_vpaned_height] 190
+[sst_vpaned_height] 174
 @28
 gp_fifo_tb.my_fifo.clk
 gp_fifo_tb.my_fifo.reset
@@ -24,21 +24,18 @@ gp_fifo_tb.my_fifo.data_out[63:0]
 @28
 gp_fifo_tb.my_fifo.empty
 gp_fifo_tb.my_fifo.error
-@22
-gp_fifo_tb.my_fifo.fifo_ocup[5:0]
-@28
 gp_fifo_tb.my_fifo.full
 @22
-gp_fifo_tb.my_fifo.next_read_ptr[5:0]
-gp_fifo_tb.my_fifo.next_write_ptr[5:0]
 gp_fifo_tb.my_fifo.ocup[4:0]
 @28
 gp_fifo_tb.my_fifo.read_en
-@22
-gp_fifo_tb.my_fifo.read_ptr_ff[5:0]
-@28
 gp_fifo_tb.my_fifo.write_en
+@22
+gp_fifo_tb.my_fifo.fifo_ocup[4:0]
+gp_fifo_tb.my_fifo.next_read_ptr[4:0]
+gp_fifo_tb.my_fifo.next_write_ptr[4:0]
+gp_fifo_tb.my_fifo.read_ptr_ff[4:0]
 @23
-gp_fifo_tb.my_fifo.write_ptr_ff[5:0]
+gp_fifo_tb.my_fifo.write_ptr_ff[4:0]
 [pattern_trace] 1
 [pattern_trace] 0

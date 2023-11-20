@@ -16,7 +16,7 @@ VC buffers are
 CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 */
 
-`include "input_router.v"
+`include "input_module/input_router.v"
 `include "utils/vc_buffer.v"
 `include "utils/rr_arbiter.v"
 `include "utils/demux_1to5.v"
@@ -35,6 +35,12 @@ module input_module(
     input wire [2:0] port;
     input wire [15:0] router_x;
     input wire [15:0] router_y;
+    
+    output wire [2:0] vc_select;
+    
+    // for output module flow control
+    // [L,W,E,S,N]
+    input wire [4:0] recv_full;
 );
 
     reg write_en_N, write_en_S, write_en_E, write_en_W;
@@ -45,7 +51,7 @@ module input_module(
     wire empty_N,empty_S,empty_E,empty_W;
     wire [4:0] ocup_N,ocup_S,ocup_E,ocup_W;
     
-    wire [2:0] vc_select,rr_select;
+    wire [2:0] rr_select;
 
     // for Local port
     reg write_en_L, read_en_L;
@@ -91,7 +97,7 @@ module input_module(
     
     mux_5to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
     mux_5to1 empty({empty_N,empty_S,empty_E,empty_W,empty_L},rr_select,empty);
-    mux_5to1 error({error_N,error_S,error_E,error_W,empty_L},rr_select,error);
+    mux_5to1 error({error_N,error_S,error_E,error_W,error_L},rr_select,error);
 
     mux_5to1_64bit data(data_N,data_S,data_E,data_W,data_L,rr_select,data_out);
     
@@ -167,7 +173,7 @@ module input_module(
     rr_arbiter arb(
       clk,
       reset,
-      input wire [4:0] {!empty_L,!empty_W,!empty_E,!empty_S, !empty_N}, // 5 request inputs
+      input wire [4:0] {!empty_L,!empty_W,!empty_E,!empty_S, !empty_N}, // 5 request inputs , and with not full 
       output reg [2:0] rr_select
     );
 

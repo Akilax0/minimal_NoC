@@ -8,6 +8,8 @@ The whole FIFO runs on the same clock domain (ie. not the async version )
 
 32 slots of 64 bits
 
+Tested for same time reads and writes
+
 */
 
 module gp_fifo(
@@ -24,7 +26,7 @@ module gp_fifo(
 );
 
     // this is one less than MSB (32bit -> 5 )
-    `define MSB_SLOT 5
+    `define MSB_SLOT 4
 
     reg [63:0] fifo_ff [31:0]; 
     reg [`MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
@@ -34,7 +36,8 @@ module gp_fifo(
         next_write_ptr = write_ptr_ff;
 
         empty = (write_ptr_ff == read_ptr_ff);
-        full = (write_ptr_ff[`MSB_SLOT-1:0] == read_ptr_ff[`MSB_SLOT-1:0] )  && (write_ptr_ff[`MSB_SLOT]!= read_ptr_ff[`MSB_SLOT]);
+        full = (write_ptr_ff[`MSB_SLOT-1:0] == read_ptr_ff[`MSB_SLOT-1:0] ) 
+            && (write_ptr_ff[`MSB_SLOT]!= read_ptr_ff[`MSB_SLOT]);
                 
         data_out = empty ? 0 : fifo_ff[read_ptr_ff[`MSB_SLOT-1:0]];
         
