@@ -55,22 +55,14 @@ module gp_fifo_tb();
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
-        write_en = 0;
-        data_in = 64'hA5A5A5A5A5A5A1A5; // Example data
+        write_en = 1;
+        data_in = 64'h00000000BBBBBBBB; // Example data
 
         #10;
-        // Release reset
-        reset = 1'b0;
-        // Write data to the FIFO
-        write_en = 0;
-        data_in = 64'hA5A5A5A5A5A5A4A5; // Example data
-
-        #10;
-        // Release reset
-        reset = 1'b0;
         // Write data to the FIFO
         write_en = 1;
-        data_in = 64'h35A5A5A5A5A5A5A5; // Example data
+        data_in = 64'h00010001BBBBBBBB; // Example data
+
 
         #10;
         write_en = 0;
@@ -79,8 +71,13 @@ module gp_fifo_tb();
         
         #10;
         read_en = 1;
+        write_en = 1;
+        data_in = 64'h00010001CCCCCCCC; // Example data
 
         #10;
+        read_en = 0;
+        write_en = 0;
+        #40;
         // Perform additional read and write operations as needed
         // End simulation
         $finish;

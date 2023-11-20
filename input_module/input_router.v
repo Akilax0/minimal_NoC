@@ -15,17 +15,19 @@ Compare with x and y position of the contained router
 port is inputted to be ignored
 
 
-DOES NOT ACCOUNT FOR SAME PORT JUST YET
+DOES NOT ACCOUNT FOR SAME PORT JUST YET -> Now it happens!! gives out invalid 
+both xy and yx tested
+
 */
 
 module input_router(
     input wire clk, 
     input wire reset,
-    input wire [63:0] flit;
-    input wire [2:0] port;
-    input wire [15:0] router_x;
-    input wire [15:0] router_y;
-    output reg [2:0] vc_select;
+    input wire [63:0] flit,
+    input wire [2:0] port,
+    input wire [15:0] router_x,
+    input wire [15:0] router_y,
+    output reg [2:0] vc_select
 );
 
     // Use the flit format if needed later on -> currently going for packet based switching
@@ -51,6 +53,8 @@ module input_router(
 
 
     // XY algorithm 
+    // First send in X direction 
+    // Then Y direction
     always @ (*)begin
         // if ( flit[1:0] == `HEAD  )begin
             if (dest_x == router_x && dest_y == router_y)begin
@@ -58,50 +62,55 @@ module input_router(
             end
             else if (dest_x == router_x)begin
                 if(dest_y < router_y)begin
-                    vc_select = `W;
+                    vc_select = `N;
                 end
                 else begin
-                    vc_select = `E;
+                    vc_select = `S;
                 end
             end
             else begin
                 if(dest_x > router_x)begin
-                    vc_select = `S;
+                    vc_select = `E;
                 end
                 else begin
-                    vc_select = `N;
+                    vc_select = `W;
                 end
             end
 
             // check if this works to avoid packets be sending back to source 
-            if(vc_select == port && dest_x == router_x && dest_y == router_y)
-                vc_select = INVALID;
+            if(vc_select == port )
+                vc_select = `INVALID;
         // end
     end
 
     // // YX algorithm 
+    // // First y direction 
+    // // Then x direction 
     // always @ (*)begin
-    //     if ( flit[1:0] == `HEAD  )begin
+    //     // if ( flit[1:0] == `HEAD  )begin
     //         if (dest_x == router_x && dest_y == router_y)begin
     //             vc_select = `L;
     //         end
-    //         else if (dest_x == router_y)begin
-    //             if(dest_y < router_x)begin
-    //                 vc_select = `N;
+    //         else if (dest_y == router_y)begin
+    //             if(dest_x < router_x)begin
+    //                 vc_select = `W;
     //             end
     //             else begin
-    //                 vc_select = `S;
+    //                 vc_select = `E;
     //             end
     //         end
     //         else begin
-    //             if(dest_x > router_y)begin
-    //                 vc_select = `E;
+    //             if(dest_y > router_y)begin
+    //                 vc_select = `S;
     //             end
     //             else begin
-    //                 vc_select = `W;
+    //                 vc_select = `N;
     //             end
     //         end
-    //     end
+
+    //         if(vc_select == port )
+    //             vc_select = `INVALID;
+    //     // end
     // end
 
 endmodule

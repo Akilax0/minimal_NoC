@@ -1,46 +1,37 @@
 `timescale 1ns / 1ps
-`include "../../input_module/input_module.v"
+`include "../../input_module/input_router.v"
 
-module input_module_tb();
+module input_router_tb();
     
     reg clk;
     reg reset;
-    reg [63:0] data_in;
-    reg read_en;
-    reg write_en;
-    wire [63:0] data_out; 
-
-    // input router calculations 
+    reg [63:0] flit;
     reg [2:0] port;
     reg [15:0] router_x;
     reg [15:0] router_y;
+    wire [2:0] vc_select;
 
     // Instantiate the router module
-    input_module input (
+    input_router router (
         .clk(clk),
         .reset(reset),
-        .data_in(data_in),
-        .read_en(read_en),
-        .write_en(write_en),
-        .data_out(data_out),
+        .flit(flit),
         .port(port),
         .router_x(router_x),
         .router_y(router_y),
+        .vc_select(vc_select)
     );
 
     integer i;
     // VCD dump file
     initial begin
-        $dumpfile("input_module.vcd");
-        $dumpvars(0, input_module_tb);
+        $dumpfile("input_router_tb.vcd");
+        $dumpvars(0, input_router_tb);
 
         // Initialize signals
         clk = 1;
         reset = 1;
-        data_in;
-        read_en;
-        write_en;
-
+        flit = 64'h0;
         port=3'b0;
         router_x =16'h0;
         router_y = 16'h0;
