@@ -3,20 +3,24 @@
 
 module gp_fifo_tb();
 
+    localparam  LENGTH = 32;
+    localparam  DEPTH = 32;
+    localparam  MSB_SLOT = 4;
+
     // Define testbench signals
     reg clk;
     reg reset;
     reg write_en;
     reg read_en;
-    reg [63:0] data_in;
-    wire [63:0] data_out;
+    reg [DEPTH-1:0] data_in;
+    wire [DEPTH-1:0] data_out;
     wire error;
     wire full;
     wire empty;
-    wire [4:0] ocup;
+    wire [MSB_SLOT:0] ocup;
 
     // Instantiate the FIFO module
-    gp_fifo my_fifo (
+    gp_fifo #(.LENGTH(LENGTH) , .MSB_SLOT(MSB_SLOT), .DEPTH(DEPTH)) my_fifo(
         .clk(clk),
         .reset(reset),
         .write_en(write_en),
@@ -39,26 +43,26 @@ module gp_fifo_tb();
         reset = 1;
         write_en = 1'b0;
         read_en = 1'b0;
-        data_in = 64'h0;
+        data_in = 32'h0;
 
         #10;
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
         write_en = 1;
-        data_in = 64'hA5A5A5A5A5A5A5A5; // Example data
+        data_in = 32'h0101A5A5;// Example data
         
         #10;
         // Release reset
         reset = 1'b0;
         // Write data to the FIFO
         write_en = 1;
-        data_in = 64'h00000000BBBBBBBB; // Example data
+        data_in = 32'h0000BBBB; // Example data
 
         #10;
         // Write data to the FIFO
         write_en = 1;
-        data_in = 64'h00010001BBBBBBBB; // Example data
+        data_in = 32'h00010001; // Example data
 
 
         #10;
@@ -70,7 +74,7 @@ module gp_fifo_tb();
         #10;
         read_en = 1;
         write_en = 1;
-        data_in = 64'h00010001CCCCCCCC; // Example data
+        data_in = 64'h0100CCCC; // Example data
 
         #10;
         write_en = 0;

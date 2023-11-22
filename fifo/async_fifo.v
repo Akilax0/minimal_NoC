@@ -11,23 +11,28 @@ Have to test this implementation before integration
 
 */
 
-`include "./async_fifo_util/fifo_mem.v"
-`include "./async_fifo_util/sync_r2w.v"
-`include "./async_fifo_util/sync_w2r.v"
+`include "fifo/async_fifo_util/fifo_mem.v"
+`include "fifo/async_fifo_util/sync_r2w.v"
+`include "fifo/async_fifo_util/sync_w2r.v"
+`include "fifo/async_fifo_util/rptr_empty.v"
+`include "fifo/async_fifo_util/wptr_full.v"
 
 
 module async_fifo(
-    output [63:0] rdata, 
+    output [DEPTH-1:0] rdata, 
     output wfull, 
     output rempty, 
-    input [63:0] wdata, 
+    input [DEPTH-1:0] wdata, 
     input winc, wclk, wrst_n, 
     input rinc, rclk, rrst_n
 ); 
+    
+    parameter LENGTH = 32;
+    parameter DEPTH = 32;
+    parameter MSB_SLOT = 4;
 
-
-    wire [4:0] waddr, raddr; 
-    wire [4:0] wptr, rptr, wq2_rptr, rq2_wptr; 
+    wire [MSB_SLOT:0] waddr, raddr; 
+    wire [MSB_SLOT:0] wptr, rptr, wq2_rptr, rq2_wptr; 
 
     sync_r2w sync_r2w (
         .wq2_rptr(wq2_rptr), 
@@ -43,7 +48,7 @@ module async_fifo(
         .rrst_n(rrst_n)
     ); 
         
-    fifomem fifomem (
+    fifomem #(.LENGTH(LENGTH) , .MSB_SLOT(MSB_SLOT), .DEPTH(DEPTH)) fifomem (
         .rdata(rdata), 
         .wdata(wdata), 
         .waddr(waddr), 

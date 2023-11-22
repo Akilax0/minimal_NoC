@@ -6,40 +6,47 @@ Descripton: Simple FIFO module
 General purpose FIFO to handle the read and write buffer.
 The whole FIFO runs on the same clock domain (ie. not the async version )
 
-32 slots of 64 bits
+The below can be changed with the use of parameters
+32 slots of 32 bits
 
 Tested for same time reads and writes
 
 */
-
+//  #(parameter LENGTH = 32 , MSB_SLOT = 4, DEPTH = 32)
 module gp_fifo(
     input clk,
     input reset,
     input write_en,
     input read_en,
-    input [63:0] data_in,
-    output reg [63:0] data_out,
+    input [DEPTH-1:0] data_in,
+    output reg [DEPTH-1:0] data_out,
     output reg error,
     output reg full,
     output reg empty,
-    output reg [4:0] ocup
+    output reg [MSB_SLOT:0] ocup
 );
 
-    // this is one less than MSB (32bit -> 5 )
-    `define MSB_SLOT 4
 
-    reg [63:0] fifo_ff [31:0]; 
-    reg [`MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
+    parameter LENGTH = 32;
+    // this is one less than MSB thie is for the length of fifo (32bit -> 5 )
+    // `define MSB_SLOT 4
+    parameter MSB_SLOT = 4;
+    parameter DEPTH =  32;
+
+
+
+    reg [DEPTH-1:0] fifo_ff [LENGTH-1:0]; 
+    reg [MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
 
     always@*begin
         next_read_ptr = read_ptr_ff;
         next_write_ptr = write_ptr_ff;
 
         empty = (write_ptr_ff == read_ptr_ff);
-        full = (write_ptr_ff[`MSB_SLOT-1:0] == read_ptr_ff[`MSB_SLOT-1:0] ) 
-            && (write_ptr_ff[`MSB_SLOT]!= read_ptr_ff[`MSB_SLOT]);
+        full = (write_ptr_ff[MSB_SLOT-1:0] == read_ptr_ff[MSB_SLOT-1:0] ) 
+            && (write_ptr_ff[MSB_SLOT]!= read_ptr_ff[MSB_SLOT]);
                 
-        data_out = empty ? 0 : fifo_ff[read_ptr_ff[`MSB_SLOT-1:0]];
+        data_out = empty ? 0 : fifo_ff[read_ptr_ff[MSB_SLOT-1:0]];
         
         if (write_en && ~full)
             next_write_ptr = write_ptr_ff + 1'b1;
@@ -66,7 +73,7 @@ module gp_fifo(
             write_ptr_ff <= next_write_ptr;
             read_ptr_ff <= next_read_ptr;
             if (write_en && ~full)
-                fifo_ff[write_ptr_ff[`MSB_SLOT-1:0]] <= data_in;
+                fifo_ff[write_ptr_ff[MSB_SLOT-1:0]] <= data_in;
         end
     end
 endmodule
