@@ -1,5 +1,5 @@
 $date
-	Wed Nov 22 10:05:18 2023
+	Wed Nov 22 22:37:15 2023
 $end
 $version
 	Icarus Verilog
@@ -8,7 +8,7 @@ $timescale
 	1ps
 $end
 $scope module gp_fifo_tb $end
-$var wire 5 ! ocup [4:0] $end
+$var wire 6 ! ocup [5:0] $end
 $var wire 1 " full $end
 $var wire 1 # error $end
 $var wire 1 $ empty $end
@@ -27,13 +27,13 @@ $var wire 1 * write_en $end
 $var reg 32 , data_out [31:0] $end
 $var reg 1 $ empty $end
 $var reg 1 # error $end
-$var reg 5 - fifo_ocup [4:0] $end
+$var reg 6 - fifo_ocup [5:0] $end
 $var reg 1 " full $end
-$var reg 5 . next_read_ptr [4:0] $end
-$var reg 5 / next_write_ptr [4:0] $end
-$var reg 5 0 ocup [4:0] $end
-$var reg 5 1 read_ptr_ff [4:0] $end
-$var reg 5 2 write_ptr_ff [4:0] $end
+$var reg 6 . next_read_ptr [5:0] $end
+$var reg 6 / next_write_ptr [5:0] $end
+$var reg 6 0 ocup [5:0] $end
+$var reg 6 1 read_ptr_ff [5:0] $end
+$var reg 6 2 write_ptr_ff [5:0] $end
 $var integer 32 3 i [31:0] $end
 $upscope $end
 $upscope $end

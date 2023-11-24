@@ -30,7 +30,7 @@ module gp_fifo(
     parameter LENGTH = 32;
     // this is one less than MSB thie is for the length of fifo (32bit -> 5 )
     // `define MSB_SLOT 4
-    parameter MSB_SLOT = 4;
+    parameter MSB_SLOT = 5;
     parameter DEPTH =  32;
 
 

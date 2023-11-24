@@ -5,7 +5,7 @@ module gp_fifo_tb();
 
     localparam  LENGTH = 32;
     localparam  DEPTH = 32;
-    localparam  MSB_SLOT = 4;
+    localparam  MSB_SLOT = 5;
 
     // Define testbench signals
     reg clk;
