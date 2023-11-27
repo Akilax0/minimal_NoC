@@ -11,44 +11,44 @@ Have to test this implementation before integration
 
 */
 
-`include "fifo/async_fifo_util/fifo_mem.v"
-`include "fifo/async_fifo_util/sync_r2w.v"
-`include "fifo/async_fifo_util/sync_w2r.v"
-`include "fifo/async_fifo_util/rptr_empty.v"
-`include "fifo/async_fifo_util/wptr_full.v"
+`include "../../fifo/async_fifo_util/fifo_mem.v"
+`include "../../fifo/async_fifo_util/sync_r2w.v"
+`include "../../fifo/async_fifo_util/sync_w2r.v"
+`include "../../fifo/async_fifo_util/rptr_empty.v"
+`include "../../fifo/async_fifo_util/wptr_full.v"
 
 
 module async_fifo(
-    output [DEPTH-1:0] rdata, 
+    output [DSIZE-1:0] rdata, 
     output wfull, 
     output rempty, 
-    input [DEPTH-1:0] wdata, 
+    input [DSIZE-1:0] wdata, 
     input winc, wclk, wrst_n, 
     input rinc, rclk, rrst_n
 ); 
     
-    parameter LENGTH = 32;
-    parameter DEPTH = 32;
-    parameter MSB_SLOT = 4;
+    parameter DSIZE = 32;
+    parameter ADDRSIZE = 5;
 
-    wire [MSB_SLOT:0] waddr, raddr; 
-    wire [MSB_SLOT:0] wptr, rptr, wq2_rptr, rq2_wptr; 
+    wire [ADDRSIZE-1:0] waddr, raddr; 
+    // extra bit used to check for full/empty
+    wire [ADDRSIZE:0] wptr, rptr, wq2_rptr, rq2_wptr; 
 
-    sync_r2w sync_r2w (
+    sync_r2w #(.ADDRSIZE(ADDRSIZE)) sync_r2w (
         .wq2_rptr(wq2_rptr), 
         .rptr(rptr), 
         .wclk(wclk), 
         .wrst_n(wrst_n)
     ); 
         
-    sync_w2r sync_w2r (
+    sync_w2r #(.ADDRSIZE(ADDRSIZE))sync_w2r (
         .rq2_wptr(rq2_wptr), 
         .wptr(wptr), 
         .rclk(rclk), 
         .rrst_n(rrst_n)
     ); 
         
-    fifomem #(.LENGTH(LENGTH) , .MSB_SLOT(MSB_SLOT), .DEPTH(DEPTH)) fifomem (
+    fifomem #(.ADDRSIZE(ADDRSIZE), .DSIZE(DSIZE)) fifomem (
         .rdata(rdata), 
         .wdata(wdata), 
         .waddr(waddr), 
@@ -58,7 +58,7 @@ module async_fifo(
         .wclk(wclk)
     ); 
         
-    rptr_empty rptr_empty (
+    rptr_empty #(.ADDRSIZE(ADDRSIZE)) rptr_empty (
         .rempty(rempty), 
         .raddr(raddr), 
         .rptr(rptr), 
@@ -68,7 +68,7 @@ module async_fifo(
         .rrst_n(rrst_n)
     ); 
     
-    wptr_full wptr_full (
+    wptr_full #(.ADDRSIZE(ADDRSIZE))wptr_full (
         .wfull(wfull), 
         .waddr(waddr), 
         .wptr(wptr), 

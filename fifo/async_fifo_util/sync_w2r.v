@@ -1,10 +1,11 @@
 module sync_w2r(
-    output reg [4:0] rq2_wptr,
-    input [4:0] wptr,
+    output reg [ADDRSIZE:0] rq2_wptr,
+    input [ADDRSIZE:0] wptr,
     input rclk, rrst_n
 );
+    parameter ADDRSIZE = 5;
 
-    reg [4:0] rq1_wptr;
+    reg [ADDRSIZE:0] rq1_wptr;
 
     always @(posedge rclk or negedge rrst_n)begin
         if (!rrst_n) 

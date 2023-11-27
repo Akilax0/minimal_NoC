@@ -3,22 +3,21 @@
 
 module async_fifo_tb();
 
-    localparam  LENGTH = 32;
-    localparam  DEPTH = 32;
-    localparam  MSB_SLOT = 4;
+    localparam  DSIZE = 32;
+    localparam  ADDRSIZE = 5;
 
     // Define testbench signals
-    wire [DEPTH:0] rdata, 
-    wire wfull, 
-    wire rempty, 
+    wire [DSIZE-1:0] rdata;
+    wire wfull;
+    wire rempty; 
 
-    reg [DEPTH:0] wdata, 
-    reg winc, wclk, wrst_n, 
-    reg rinc, rclk, rrst_n
+    reg [DSIZE-1:0] wdata; 
+    reg winc, wclk, wrst_n; 
+    reg rinc, rclk, rrst_n;
 
 
     // Instantiate the FIFO module
-    async_fifo #(.LENGTH(LENGTH) , .MSB_SLOT(MSB_SLOT), .DEPTH(DEPTH)) my_fifo(
+    async_fifo #(.ADDRSIZE(ADDRSIZE), .DSIZE(DSIZE)) my_fifo(
         .rdata(rdata),
         .wfull(wfull),
         .rempty(rempty), 
@@ -73,6 +72,10 @@ module async_fifo_tb();
         winc = 1;
         rinc = 1;
         wdata = 32'h0100CCCC;
+
+        #20;
+        winc = 0;
+        rinc = 1;
 
         #20;
         winc = 0;

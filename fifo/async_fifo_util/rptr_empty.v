@@ -1,12 +1,14 @@
 module rptr_empty (
     output reg rempty,
-    output [4:0] raddr,
-    output reg [5:0] rptr,
-    input [5:0] rq2_wptr,
+    output [ADDRSIZE-1:0] raddr,
+    output reg [ADDRSIZE:0] rptr,
+    input [ADDRSIZE:0] rq2_wptr,
     input rinc, rclk, rrst_n
 );
-    reg [5:0] rbin;
-    wire [5:0] rgraynext, rbinnext;
+    parameter ADDRSIZE = 5;
+
+    reg [ADDRSIZE:0] rbin;
+    wire [ADDRSIZE:0] rgraynext, rbinnext;
 
     //-------------------
     // GRAYSTYLE2 pointer
@@ -19,7 +21,7 @@ module rptr_empty (
     end
 
     // Memory read-address pointer (okay to use binary to address memory)
-    assign raddr= rbin[4:0];
+    assign raddr= rbin[ADDRSIZE-1:0];
     assign rbinnext = rbin + (rinc & ~rempty);
     assign rgraynext = (rbinnext>>1) ^ rbinnext;
 
