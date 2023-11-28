@@ -3,16 +3,21 @@
 
 module ni_tb();
     
+    parameter ADDRSIZE = 5;
+    parameter MSB_SLOT = 5;
+    localparam RSIZE = 1<<MSB_SLOT-1;
+    localparam DSIZE = 1<<MSB_SLOT;
+
     reg clk;
     reg reset;
-    reg [31:0] core_write_data;
-    reg [31:0] core_write_addr;
+    reg [RSIZE-1:0] core_write_data;
+    reg [RSIZE-1:0] core_write_addr;
     reg core_write_en;
     reg core_read_en;
-    wire [31:0] core_read_data;
+    wire [RSIZE-1:0] core_read_data;
 
     // Instantiate the FIFO module
-    ni my_ni (
+    ni #(.ADDRSIZE(ADDRSIZE), .MSB_SLOT(MSB_SLOT)) my_ni (
         .clk(clk),
         .reset(reset),
         .core_write_data(core_write_data),
@@ -35,8 +40,8 @@ module ni_tb();
         reset = 1;
         core_write_en = 1'b0;
         core_read_en = 1'b0;
-        core_write_addr = 32'h0;
-        core_write_data = 32'h0;
+        core_write_addr = 16'h0;
+        core_write_data = 16'h0;
 
         #20;
         // Release reset
@@ -44,22 +49,22 @@ module ni_tb();
         // Write data to the FIFO
         core_write_en = 1'b1;
         core_read_en = 1'b0;
-        core_write_addr = 32'hA5A5A5A5;
-        core_write_data = 32'hAAAAAAAA;
+        core_write_addr = 16'hA5A5;
+        core_write_data = 16'hAAAA;
 
         #20;
 
         core_write_en = 1'b0;
         core_read_en = 1'b1;
-        core_write_addr = 32'h0;
-        core_write_data = 32'h0;
+        core_write_addr = 16'h0;
+        core_write_data = 16'h0;
 
         #20;
         reset = 1;
         core_write_en = 1'b0;
         core_read_en = 1'b0;
-        core_write_addr = 32'h0;
-        core_write_data = 32'h0;
+        core_write_addr = 16'h0;
+        core_write_data = 16'h0;
 
         #10;
         reset = 0;

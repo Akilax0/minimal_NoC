@@ -16,23 +16,23 @@ module axi4lite_slave(
     input wire arestn,
     
     // read address channel
-    input wire [31:0] araddr,
+    input wire [DSIZE-1:0] araddr,
     input wire arvalid,
     output reg arready,
 
     // read data channel
-    output wire [31:0] rdata,
+    output wire [RSIZE-1:0] rdata,
     output wire [1:0] rresp,
     output reg rvalid,
     input wire rready,
 
     // write address channel
-    input wire [31:0] awaddr,
+    input wire [RSIZE-1:0] awaddr,
     input wire awvalid,
     output reg awready,
 
     // write data channel
-    input wire [31:0] wdata,
+    input wire [RSIZE-1:0] wdata,
     input wire wvalid,
     output wire wready,
 
@@ -43,14 +43,18 @@ module axi4lite_slave(
     
     // For fifo access
     output wire read_en,
-    input wire [31:0] read_data,
+    input wire [DSIZE-1:0] read_data,
     input wire empty,
 
     output wire write_en,
-    output wire [63:0] write_data,
+    output wire [DSIZE-1:0] write_data,
     input wire full
 
 );
+
+    parameter ADDRSIZE = 5;
+    localparam RSIZE = 1<<ADDRSIZE-1;
+    localparam DSIZE = 1<<ADDRSIZE;
 
     // rresp or bresp
     // 0b00 - OKAY

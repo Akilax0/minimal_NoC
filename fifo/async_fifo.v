@@ -5,7 +5,7 @@ Description: Top module file for the async fifo
 
 Ref: Cummings
 
-64 bit x 32 slots
+32 bit x 32 slots
 
 Have to test this implementation before integration
 

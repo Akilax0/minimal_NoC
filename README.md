@@ -24,7 +24,7 @@ The NoC architecture is based on ranveNoc using only the required components for
 
 - gp_fifo (paramterized , tested for read , write) &check;
 - async_fifo (parameterized, read/write, different clocks) &check;
-- ni (include async_fifo controlled with axi4lite)
+- ni (parameterized, include async_fifo controlled with axi4lite)
 - input controller (check write buffer and vc buffers of input module)
 - input router (parameterized algo select)
 - vc buffers (parameterized)

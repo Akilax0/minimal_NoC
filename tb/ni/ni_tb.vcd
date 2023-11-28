@@ -1,5 +1,5 @@
 $date
-	Sun Nov 19 12:05:39 2023
+	Mon Nov 27 11:29:08 2023
 $end
 $version
 	Icarus Verilog
@@ -8,11 +8,11 @@ $timescale
 	1ps
 $end
 $scope module ni_tb $end
-$var wire 32 ! core_read_data [31:0] $end
+$var wire 16 ! core_read_data [15:0] $end
 $var reg 1 " clk $end
 $var reg 1 # core_read_en $end
-$var reg 32 $ core_write_addr [31:0] $end
-$var reg 32 % core_write_data [31:0] $end
+$var reg 16 $ core_write_addr [15:0] $end
+$var reg 16 % core_write_data [15:0] $end
 $var reg 1 & core_write_en $end
 $var reg 1 ' reset $end
 $var integer 32 ( i [31:0] $end
@@ -20,23 +20,23 @@ $scope module my_ni $end
 $var wire 2 ) bresp [1:0] $end
 $var wire 1 " clk $end
 $var wire 1 # core_read_en $end
-$var wire 32 * core_write_addr [31:0] $end
-$var wire 32 + core_write_data [31:0] $end
+$var wire 16 * core_write_addr [15:0] $end
+$var wire 16 + core_write_data [15:0] $end
 $var wire 1 & core_write_en $end
 $var wire 1 ' reset $end
 $var wire 2 , rresp [1:0] $end
 $var wire 1 - write_en $end
-$var wire 64 . write_data [63:0] $end
+$var wire 32 . write_data [31:0] $end
 $var wire 1 / wready $end
 $var wire 1 0 rvalid $end
 $var wire 1 1 read_en $end
-$var wire 32 2 read_data [31:0] $end
-$var wire 64 3 read64_data [63:0] $end
-$var wire 5 4 ocup [4:0] $end
+$var wire 16 2 read_data [15:0] $end
+$var wire 32 3 read64_data [31:0] $end
+$var wire 6 4 ocup [5:0] $end
 $var wire 1 5 full $end
 $var wire 1 6 error $end
 $var wire 1 7 empty $end
-$var wire 32 8 core_read_data [31:0] $end
+$var wire 16 8 core_read_data [15:0] $end
 $var wire 1 9 bvalid $end
 $var wire 1 : awready $end
 $var wire 1 ; arready $end
@@ -50,20 +50,20 @@ $var wire 1 " aclk $end
 $var wire 32 A araddr [31:0] $end
 $var wire 1 B arestn $end
 $var wire 1 < arvalid $end
-$var wire 32 C awaddr [31:0] $end
+$var wire 16 C awaddr [15:0] $end
 $var wire 1 = awvalid $end
 $var wire 1 > bready $end
 $var wire 2 D bresp [1:0] $end
-$var wire 32 E rdata [31:0] $end
-$var wire 32 F read_data [31:0] $end
+$var wire 16 E rdata [15:0] $end
+$var wire 16 F read_data [15:0] $end
 $var wire 1 1 read_en $end
 $var wire 1 ? rready $end
 $var wire 2 G rresp [1:0] $end
-$var wire 32 H wdata [31:0] $end
+$var wire 16 H wdata [15:0] $end
 $var wire 1 / wready $end
 $var wire 1 - write_en $end
 $var wire 1 @ wvalid $end
-$var wire 64 I write_data [63:0] $end
+$var wire 32 I write_data [31:0] $end
 $var wire 1 J reset $end
 $var wire 1 5 full $end
 $var wire 1 7 empty $end
@@ -74,18 +74,18 @@ $var reg 1 0 rvalid $end
 $upscope $end
 $scope module write_fifo $end
 $var wire 1 " clk $end
-$var wire 64 K data_in [63:0] $end
+$var wire 32 K data_in [31:0] $end
 $var wire 1 1 read_en $end
 $var wire 1 ' reset $end
 $var wire 1 - write_en $end
-$var reg 64 L data_out [63:0] $end
+$var reg 32 L data_out [31:0] $end
 $var reg 1 7 empty $end
 $var reg 1 6 error $end
 $var reg 6 M fifo_ocup [5:0] $end
 $var reg 1 5 full $end
 $var reg 6 N next_read_ptr [5:0] $end
 $var reg 6 O next_write_ptr [5:0] $end
-$var reg 5 P ocup [4:0] $end
+$var reg 6 P ocup [5:0] $end
 $var reg 6 Q read_ptr_ff [5:0] $end
 $var reg 6 R write_ptr_ff [5:0] $end
 $var integer 32 S i [31:0] $end
@@ -95,224 +95,224 @@ $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 T \fifo_ff[0] [63:0] $end
+$var reg 32 T \fifo_ff[0] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 U \fifo_ff[1] [63:0] $end
+$var reg 32 U \fifo_ff[1] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 V \fifo_ff[2] [63:0] $end
+$var reg 32 V \fifo_ff[2] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 W \fifo_ff[3] [63:0] $end
+$var reg 32 W \fifo_ff[3] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 X \fifo_ff[4] [63:0] $end
+$var reg 32 X \fifo_ff[4] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 Y \fifo_ff[5] [63:0] $end
+$var reg 32 Y \fifo_ff[5] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 Z \fifo_ff[6] [63:0] $end
+$var reg 32 Z \fifo_ff[6] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 [ \fifo_ff[7] [63:0] $end
+$var reg 32 [ \fifo_ff[7] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 \ \fifo_ff[8] [63:0] $end
+$var reg 32 \ \fifo_ff[8] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 ] \fifo_ff[9] [63:0] $end
+$var reg 32 ] \fifo_ff[9] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 ^ \fifo_ff[10] [63:0] $end
+$var reg 32 ^ \fifo_ff[10] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 _ \fifo_ff[11] [63:0] $end
+$var reg 32 _ \fifo_ff[11] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 ` \fifo_ff[12] [63:0] $end
+$var reg 32 ` \fifo_ff[12] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 a \fifo_ff[13] [63:0] $end
+$var reg 32 a \fifo_ff[13] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 b \fifo_ff[14] [63:0] $end
+$var reg 32 b \fifo_ff[14] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 c \fifo_ff[15] [63:0] $end
+$var reg 32 c \fifo_ff[15] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 d \fifo_ff[16] [63:0] $end
+$var reg 32 d \fifo_ff[16] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 e \fifo_ff[17] [63:0] $end
+$var reg 32 e \fifo_ff[17] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 f \fifo_ff[18] [63:0] $end
+$var reg 32 f \fifo_ff[18] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 g \fifo_ff[19] [63:0] $end
+$var reg 32 g \fifo_ff[19] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 h \fifo_ff[20] [63:0] $end
+$var reg 32 h \fifo_ff[20] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 i \fifo_ff[21] [63:0] $end
+$var reg 32 i \fifo_ff[21] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 j \fifo_ff[22] [63:0] $end
+$var reg 32 j \fifo_ff[22] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 k \fifo_ff[23] [63:0] $end
+$var reg 32 k \fifo_ff[23] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 l \fifo_ff[24] [63:0] $end
+$var reg 32 l \fifo_ff[24] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 m \fifo_ff[25] [63:0] $end
+$var reg 32 m \fifo_ff[25] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 n \fifo_ff[26] [63:0] $end
+$var reg 32 n \fifo_ff[26] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 o \fifo_ff[27] [63:0] $end
+$var reg 32 o \fifo_ff[27] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 p \fifo_ff[28] [63:0] $end
+$var reg 32 p \fifo_ff[28] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 q \fifo_ff[29] [63:0] $end
+$var reg 32 q \fifo_ff[29] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 r \fifo_ff[30] [63:0] $end
+$var reg 32 r \fifo_ff[30] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $scope module ni_tb $end
 $scope module my_ni $end
 $scope module write_fifo $end
-$var reg 64 s \fifo_ff[31] [63:0] $end
+$var reg 32 s \fifo_ff[31] [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
@@ -449,15 +449,15 @@ b100000 S
 1@
 1=
 1"
-b10101010101010101010101010101010 %
-b10101010101010101010101010101010 +
-b10101010101010101010101010101010 H
-b1010010110100101101001011010010110101010101010101010101010101010 .
-b1010010110100101101001011010010110101010101010101010101010101010 I
-b1010010110100101101001011010010110101010101010101010101010101010 K
-b10100101101001011010010110100101 $
-b10100101101001011010010110100101 *
-b10100101101001011010010110100101 C
+b1010101010101010 %
+b1010101010101010 +
+b1010101010101010 H
+b10100101101001011010101010101010 .
+b10100101101001011010101010101010 I
+b10100101101001011010101010101010 K
+b1010010110100101 $
+b1010010110100101 *
+b1010010110100101 C
 1&
 0J
 1B

@@ -14,13 +14,13 @@ module ni(
     input reset,
 
     // Should handle how write_en is generated 
-    input wire [31:0] core_write_data,
-    input wire [31:0] core_write_addr,
+    input wire [RSIZE-1:0] core_write_data,
+    input wire [RSIZE-1:0] core_write_addr,
     input wire core_write_en,
 
     // Should handle how read_en is generated 
     // thresholed signal should be an output   
-    output wire [31:0] core_read_data,
+    output wire [RSIZE-1:0] core_read_data,
     // output wire [31:0] core_read_addr,
     input wire core_read_en
 
@@ -34,6 +34,12 @@ module ni(
     // output wire core_error,
 
 );
+
+    // packet size
+    parameter ADDRSIZE = 5;
+    parameter MSB_SLOT = 5;
+    localparam RSIZE = 1<<MSB_SLOT-1;
+    localparam DSIZE = 1<<MSB_SLOT;
 
     // Define Slave at input 
     // this will be the entry for NI 
@@ -56,7 +62,7 @@ module ni(
     // output wire axi4_error,
     // output wire [4:0] axi4_ocup
 
-    wire [63:0] core_data_in,core_data_out;//axi4_data_in,axi4_data_out;
+    wire [DSIZE-1:0] core_data_in,core_data_out;//axi4_data_in,axi4_data_out;
 
     // [data , addr ]  => [MSB,LSB]
     // assign core_data_in[63:32] = core_write_data;
@@ -79,11 +85,11 @@ module ni(
     
 
     wire read_en, empty, write_en, full,error;
-    wire [31:0] read_data;
-    wire [63:0] write_data,read64_data;
-    wire [4:0] ocup;
+    wire [DSIZE-1:0] read_data;
+    wire [DSIZE-1:0] write_data,read64_data;
+    wire [MSB_SLOT:0] ocup;
 
-    assign read_data = read64_data[31:0];
+    assign read_data = read64_data[DSIZE-1:0];
     
     // creating axi4 master behaviour within ni
     always@(posedge clk)begin
@@ -160,11 +166,24 @@ module ni(
         .full(full)
     );
 
+    // // Async fifo 
+    async_fifo #(.DSIZE(DSIZE), .ADDRSIZE(ADDRSIZE)) write_fifo(
+        .rdata(read64_data), 
+        wfull, 
+        rempty, 
+        wdata, 
+        winc, 
+        wclk, 
+        wrst_n, 
+        rinc, 
+        rclk, 
+        rrst_n
+    ); 
 
     // for testing going to read write to the same fifo
     // after verifying axi4lite slave modifies fifo as expected 
     // change to core and  ni read/write
-    gp_fifo write_fifo (
+    gp_fifo #(.LENGTH(1<<ADDRSIZE),.MSB_SLOT(ADDRSIZE),.DEPTH(DSIZE)) write_fifo (
         .clk(clk),
         .reset(reset),
         .write_en(write_en),
