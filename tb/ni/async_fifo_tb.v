@@ -55,6 +55,12 @@ module async_fifo_tb();
         winc = 1;
         rinc = 0;
         wdata = 32'h0000BBBB;
+
+        // Have to deassert winc before next clock posedge for correct
+        // operation 
+
+        #5;
+        winc = 0;
         
         #20;
 
@@ -62,11 +68,15 @@ module async_fifo_tb();
         rinc = 0;
         wdata = 32'h00010001;
 
+        #20;
+
+        winc = 1;
+        rinc = 0;
+        wdata = 32'h00010001;
 
         #20;
         winc = 0;
         rinc = 1;
-
 
         #20;
         winc = 1;

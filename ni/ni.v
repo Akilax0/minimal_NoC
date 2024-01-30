@@ -36,6 +36,8 @@ module ni(
 );
 
     // packet size
+    // Note: RSIZE denotes the 16 bits for two sections
+    // of the 32 bit word
     parameter ADDRSIZE = 5;
     parameter MSB_SLOT = 5;
     localparam RSIZE = 1<<MSB_SLOT-1;
