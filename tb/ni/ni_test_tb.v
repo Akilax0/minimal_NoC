@@ -16,15 +16,23 @@ module ni_test_tb();
     
     wire [RSIZE-1:0] core_rdata;
     wire core_rempty;
+    
+    wire [DSIZE-1:0] noc_rdata;
+    wire noc_rempty;
+    wire noc_wfull;
+    
+    reg noc_clk, noc_reset;
+    reg noc_read_en,noc_write_en;
+    reg [DSIZE-1:0] noc_wdata;
 
-    reg ni_wfull;
-    wire [RSIZE-1:0] ni_wdata;
-    wire [RSIZE-1:0] ni_waddr;
+    // reg ni_wfull;
+    // wire [RSIZE-1:0] ni_wdata;
+    // wire [RSIZE-1:0] ni_waddr;
 
-    wire ni_write_en;
-    reg ni_rempty;
-    reg [RSIZE-1:0] ni_rdata;
-    wire ni_read_en;
+    // wire ni_write_en;
+    // reg ni_rempty;
+    // reg [RSIZE-1:0] ni_rdata;
+    // wire ni_read_en;
     
 
     // Instatiate NI module
@@ -38,14 +46,22 @@ module ni_test_tb();
         .core_wfull(core_wfull),
         .core_rdata(core_rdata),
         .core_rempty(core_rempty),
-        .ni_wfull(ni_wfull),
-        .ni_wdata(ni_wdata),
-        .ni_waddr(ni_waddr),
-        .ni_write_en(ni_write_en),
-        .ni_rempty(ni_rempty),
-        .ni_rdata(ni_rdata),
-        .ni_read_en(ni_read_en)
+        .noc_rdata(noc_rdata),
+        .noc_rempty(noc_rempty),
+        .noc_wfull(noc_wfull),
+        .noc_clk(noc_clk),
+        .noc_reset(noc_reset),
+        .noc_read_en(noc_read_en),
+        .noc_wdata(noc_wdata),
+        .noc_write_en(noc_write_en)
     );
+        // .ni_wfull(ni_wfull),
+        // .ni_wdata(ni_wdata),
+        // .ni_waddr(ni_waddr),
+        // .ni_write_en(ni_write_en),
+        // .ni_rempty(ni_rempty),
+        // .ni_rdata(ni_rdata),
+        // .ni_read_en(ni_read_en)
     
     integer i;
     // VCD dump files
@@ -63,55 +79,57 @@ module ni_test_tb();
         core_write_en = 0;
         core_read_en = 0;
 
-        core_wdata = 16'b0;
-        core_waddr = 16'b0;
+        core_wdata = 16'h0;
+        core_waddr = 16'h0;
+        
+        noc_clk = 1;
+        noc_reset = 1;
 
-        ni_wfull = 1'b0;
+        noc_read_en = 0;
+        noc_write_en = 0;
 
-        ni_rempty = 1'b0;
-        ni_rdata = 16'b0;
+        noc_wdata = 32'h0;
+
+        // ni_wfull = 1'b0;
+
+        // ni_rempty = 1'b0;
+        // ni_rdata = 16'b0;
 
         #20;
-        // Release reset
-        reset = 1'b1;
+        // both core and noc writes at the same time to the two FIFOS
+        reset = 0;
+        noc_reset = 0;
 
-        // Write to FIFO
         core_write_en = 1;
         core_read_en = 0;
 
-        core_wdata = 16'hABBA;
-        core_waddr = 16'hBCCB;
+        core_wdata = 16'hAAAA;
+        core_waddr = 16'hBBBB;
+        
 
-        ni_wfull = 1'b0;
+        noc_read_en = 0;
+        noc_write_en = 1;
 
-        ni_rempty = 1'b0;
-        ni_rdata = 16'b0;
+        noc_wdata = 32'hABABABAB;
+
         
         #20;
-        // Release reset
-        reset = 1'b1;
+        // both core and noc reads at the same time from the two FIFOS
+        reset = 0;
+        noc_reset = 0;
 
-        // Read from FIFO 
         core_write_en = 0;
         core_read_en = 1;
 
-        core_wdata = 16'h0000;
-        core_waddr = 16'h0000;
-
-        ni_wfull = 1'b0;
-
-        ni_rempty = 1'b0;
-        ni_rdata = 16'hAAAA;
+        core_wdata = 16'h0;
+        core_waddr = 16'h0;
         
-        #20;
-        // Release reset
-        reset = 1'b0;
 
-        // Write data to the FIFO
-        core_wdata = 16'hCCCC;
-        core_waddr = 16'hBABA;
-        ni_wfull = 1'b1;
-        
+        noc_read_en = 1;
+        noc_write_en = 0;
+
+        noc_wdata = 32'h0;
+
         #10;
         reset = 0;
 
@@ -122,6 +140,7 @@ module ni_test_tb();
     // Clock generation
     always begin
         #5 clk = ~clk;
+        #5 noc_clk = ~noc_clk;
     end
 
 endmodule

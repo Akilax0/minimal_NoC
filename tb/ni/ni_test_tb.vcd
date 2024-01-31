@@ -1,5 +1,5 @@
 $date
-	Wed Jan 31 21:58:14 2024
+	Wed Jan 31 23:04:39 2024
 $end
 $version
 	Icarus Verilog
@@ -8,171 +8,416 @@ $timescale
 	1ps
 $end
 $scope module ni_test_tb $end
-$var wire 1 ! ni_write_en $end
-$var wire 16 " ni_wdata [15:0] $end
-$var wire 16 # ni_waddr [15:0] $end
-$var wire 1 $ ni_read_en $end
-$var wire 1 % core_wfull $end
-$var wire 1 & core_rempty $end
-$var wire 16 ' core_rdata [15:0] $end
-$var reg 1 ( clk $end
-$var reg 1 ) core_read_en $end
-$var reg 16 * core_waddr [15:0] $end
-$var reg 16 + core_wdata [15:0] $end
-$var reg 1 , core_write_en $end
-$var reg 16 - ni_rdata [15:0] $end
-$var reg 1 . ni_rempty $end
-$var reg 1 / ni_wfull $end
-$var reg 1 0 reset $end
+$var wire 1 ! noc_wfull $end
+$var wire 1 " noc_rempty $end
+$var wire 32 # noc_rdata [31:0] $end
+$var wire 1 $ core_wfull $end
+$var wire 1 % core_rempty $end
+$var wire 16 & core_rdata [15:0] $end
+$var reg 1 ' clk $end
+$var reg 1 ( core_read_en $end
+$var reg 16 ) core_waddr [15:0] $end
+$var reg 16 * core_wdata [15:0] $end
+$var reg 1 + core_write_en $end
+$var reg 1 , noc_clk $end
+$var reg 1 - noc_read_en $end
+$var reg 1 . noc_reset $end
+$var reg 32 / noc_wdata [31:0] $end
+$var reg 1 0 noc_write_en $end
+$var reg 1 1 reset $end
 $scope module my_ni $end
-$var wire 1 ( clk $end
-$var wire 1 ) core_read_en $end
-$var wire 16 1 core_waddr [15:0] $end
-$var wire 16 2 core_wdata [15:0] $end
-$var wire 1 , core_write_en $end
-$var wire 16 3 ni_rdata [15:0] $end
-$var wire 1 . ni_rempty $end
-$var wire 1 / ni_wfull $end
-$var wire 1 0 reset $end
-$var wire 1 ! ni_write_en $end
-$var wire 16 4 ni_wdata [15:0] $end
-$var wire 16 5 ni_waddr [15:0] $end
-$var wire 1 $ ni_read_en $end
-$var wire 1 % core_wfull $end
-$var wire 1 & core_rempty $end
-$var wire 16 6 core_rdata [15:0] $end
+$var wire 1 ' clk $end
+$var wire 1 ( core_read_en $end
+$var wire 16 2 core_waddr [15:0] $end
+$var wire 16 3 core_wdata [15:0] $end
+$var wire 1 + core_write_en $end
+$var wire 1 4 ni_rempty $end
+$var wire 1 5 ni_wrtite_en $end
+$var wire 1 , noc_clk $end
+$var wire 1 - noc_read_en $end
+$var wire 1 . noc_reset $end
+$var wire 32 6 noc_wdata [31:0] $end
+$var wire 1 0 noc_write_en $end
+$var wire 1 1 reset $end
+$var wire 32 7 write_data [31:0] $end
+$var wire 32 8 read_data [31:0] $end
+$var wire 1 ! noc_wfull $end
+$var wire 1 " noc_rempty $end
+$var wire 32 9 noc_rdata [31:0] $end
+$var wire 1 : ni_write_en $end
+$var wire 1 ; ni_wfull $end
+$var wire 16 < ni_wdata [15:0] $end
+$var wire 16 = ni_waddr [15:0] $end
+$var wire 1 > ni_read_en $end
+$var wire 16 ? ni_rdata [15:0] $end
+$var wire 1 @ ni_empty $end
+$var wire 1 $ core_wfull $end
+$var wire 1 % core_rempty $end
+$var wire 16 A core_rdata [15:0] $end
 $scope module lw_net $end
-$var wire 1 ( clk $end
-$var wire 16 7 core_rdata [15:0] $end
-$var wire 1 ) core_read_en $end
-$var wire 1 & core_rempty $end
-$var wire 16 8 ni_rdata [15:0] $end
-$var wire 1 $ ni_read_en $end
-$var wire 1 . ni_rempty $end
-$var wire 1 0 reset $end
+$var wire 1 ' clk $end
+$var wire 16 B core_rdata [15:0] $end
+$var wire 1 ( core_read_en $end
+$var wire 1 % core_rempty $end
+$var wire 16 C ni_rdata [15:0] $end
+$var wire 1 > ni_read_en $end
+$var wire 1 4 ni_rempty $end
+$var wire 1 1 reset $end
+$upscope $end
+$scope module read_fifo $end
+$var wire 1 ' rclk $end
+$var wire 1 > rinc $end
+$var wire 1 D rrst_n $end
+$var wire 1 , wclk $end
+$var wire 32 E wdata [31:0] $end
+$var wire 1 0 winc $end
+$var wire 1 F wrst_n $end
+$var wire 6 G wq2_rptr [5:0] $end
+$var wire 6 H wptr [5:0] $end
+$var wire 1 ! wfull $end
+$var wire 5 I waddr [4:0] $end
+$var wire 6 J rq2_wptr [5:0] $end
+$var wire 6 K rptr [5:0] $end
+$var wire 1 @ rempty $end
+$var wire 32 L rdata [31:0] $end
+$var wire 5 M raddr [4:0] $end
+$scope module fifomem $end
+$var wire 32 N rdata [31:0] $end
+$var wire 1 , wclk $end
+$var wire 1 0 wclken $end
+$var wire 32 O wdata [31:0] $end
+$var wire 1 ! wfull $end
+$var wire 5 P waddr [4:0] $end
+$var wire 5 Q raddr [4:0] $end
+$upscope $end
+$scope module rptr_empty $end
+$var wire 1 ' rclk $end
+$var wire 6 R rgraynext [5:0] $end
+$var wire 1 > rinc $end
+$var wire 1 D rrst_n $end
+$var wire 6 S rq2_wptr [5:0] $end
+$var wire 1 T rempty_val $end
+$var wire 6 U rbinnext [5:0] $end
+$var wire 5 V raddr [4:0] $end
+$var reg 6 W rbin [5:0] $end
+$var reg 1 @ rempty $end
+$var reg 6 X rptr [5:0] $end
+$upscope $end
+$scope module sync_r2w $end
+$var wire 6 Y rptr [5:0] $end
+$var wire 1 , wclk $end
+$var wire 1 F wrst_n $end
+$var reg 6 Z wq1_rptr [5:0] $end
+$var reg 6 [ wq2_rptr [5:0] $end
+$upscope $end
+$scope module sync_w2r $end
+$var wire 1 ' rclk $end
+$var wire 1 D rrst_n $end
+$var wire 6 \ wptr [5:0] $end
+$var reg 6 ] rq1_wptr [5:0] $end
+$var reg 6 ^ rq2_wptr [5:0] $end
+$upscope $end
+$scope module wptr_full $end
+$var wire 1 , wclk $end
+$var wire 6 _ wgraynext [5:0] $end
+$var wire 1 0 winc $end
+$var wire 6 ` wq2_rptr [5:0] $end
+$var wire 1 F wrst_n $end
+$var wire 1 a wfull_val $end
+$var wire 6 b wbinnext [5:0] $end
+$var wire 5 c waddr [4:0] $end
+$var reg 6 d wbin [5:0] $end
+$var reg 1 ! wfull $end
+$var reg 6 e wptr [5:0] $end
+$upscope $end
 $upscope $end
 $scope module sw_net $end
-$var wire 1 ( clk $end
-$var wire 16 9 core_waddr [15:0] $end
-$var wire 16 : core_wdata [15:0] $end
-$var wire 1 % core_wfull $end
-$var wire 1 , core_write_en $end
-$var wire 16 ; ni_waddr [15:0] $end
-$var wire 16 < ni_wdata [15:0] $end
-$var wire 1 / ni_wfull $end
-$var wire 1 ! ni_write_en $end
-$var wire 1 0 reset $end
+$var wire 1 ' clk $end
+$var wire 16 f core_waddr [15:0] $end
+$var wire 16 g core_wdata [15:0] $end
+$var wire 1 $ core_wfull $end
+$var wire 1 + core_write_en $end
+$var wire 16 h ni_waddr [15:0] $end
+$var wire 16 i ni_wdata [15:0] $end
+$var wire 1 : ni_write_en $end
+$var wire 1 1 reset $end
+$var wire 1 ; ni_wfull $end
+$upscope $end
+$scope module write_fifo $end
+$var wire 1 , rclk $end
+$var wire 1 - rinc $end
+$var wire 1 j rrst_n $end
+$var wire 1 ' wclk $end
+$var wire 32 k wdata [31:0] $end
+$var wire 1 5 winc $end
+$var wire 1 l wrst_n $end
+$var wire 6 m wq2_rptr [5:0] $end
+$var wire 6 n wptr [5:0] $end
+$var wire 1 ; wfull $end
+$var wire 5 o waddr [4:0] $end
+$var wire 6 p rq2_wptr [5:0] $end
+$var wire 6 q rptr [5:0] $end
+$var wire 1 " rempty $end
+$var wire 32 r rdata [31:0] $end
+$var wire 5 s raddr [4:0] $end
+$scope module fifomem $end
+$var wire 32 t rdata [31:0] $end
+$var wire 1 ' wclk $end
+$var wire 1 5 wclken $end
+$var wire 32 u wdata [31:0] $end
+$var wire 1 ; wfull $end
+$var wire 5 v waddr [4:0] $end
+$var wire 5 w raddr [4:0] $end
+$upscope $end
+$scope module rptr_empty $end
+$var wire 1 , rclk $end
+$var wire 6 x rgraynext [5:0] $end
+$var wire 1 - rinc $end
+$var wire 1 j rrst_n $end
+$var wire 6 y rq2_wptr [5:0] $end
+$var wire 1 z rempty_val $end
+$var wire 6 { rbinnext [5:0] $end
+$var wire 5 | raddr [4:0] $end
+$var reg 6 } rbin [5:0] $end
+$var reg 1 " rempty $end
+$var reg 6 ~ rptr [5:0] $end
+$upscope $end
+$scope module sync_r2w $end
+$var wire 6 !" rptr [5:0] $end
+$var wire 1 ' wclk $end
+$var wire 1 l wrst_n $end
+$var reg 6 "" wq1_rptr [5:0] $end
+$var reg 6 #" wq2_rptr [5:0] $end
+$upscope $end
+$scope module sync_w2r $end
+$var wire 1 , rclk $end
+$var wire 1 j rrst_n $end
+$var wire 6 $" wptr [5:0] $end
+$var reg 6 %" rq1_wptr [5:0] $end
+$var reg 6 &" rq2_wptr [5:0] $end
+$upscope $end
+$scope module wptr_full $end
+$var wire 1 ' wclk $end
+$var wire 6 '" wgraynext [5:0] $end
+$var wire 1 5 winc $end
+$var wire 6 (" wq2_rptr [5:0] $end
+$var wire 1 l wrst_n $end
+$var wire 1 )" wfull_val $end
+$var wire 6 *" wbinnext [5:0] $end
+$var wire 5 +" waddr [4:0] $end
+$var reg 6 ," wbin [5:0] $end
+$var reg 1 ; wfull $end
+$var reg 6 -" wptr [5:0] $end
+$upscope $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
+b0 -"
+b0 ,"
+b0 +"
+bx *"
+x)"
+b0 ("
+bx '"
+b0 &"
+b0 %"
+b0 $"
+b0 #"
+b0 ""
+b0 !"
+b0 ~
+b0 }
+b0 |
+b0 {
+1z
+b0 y
+b0 x
+b0 w
+b0 v
+b0 u
+bx t
+b0 s
+bx r
+b0 q
+b0 p
+b0 o
+b0 n
+b0 m
+0l
+b0 k
+0j
+b0 i
+b0 h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+0a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b0 \
+b0 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+1T
+b0 S
+b0 R
+b0 Q
+b0 P
+b0 O
+bx N
+b0 M
+bx L
+b0 K
+b0 J
+b0 I
+b0 H
+b0 G
+0F
+b0 E
+0D
+bx C
+bx B
+bx A
+1@
+bx ?
+0>
+b0 =
 b0 <
-b0 ;
-b0 :
-b0 9
-b0 8
+0;
+0:
+bx 9
+bx 8
 b0 7
 b0 6
-b0 5
-b0 4
+z5
+z4
 b0 3
 b0 2
-b0 1
-10
-0/
-0.
-b0 -
-0,
-b0 +
+11
+00
+b0 /
+1.
+0-
+1,
+0+
 b0 *
-0)
-1(
-b0 '
-0&
-0%
+b0 )
+0(
+1'
+bx &
+z%
 0$
-b0 #
-b0 "
+bx #
+1"
 0!
 $end
 #5000
-0(
+0'
 #10000
-1(
-#15000
-0(
-#20000
-1(
-b1011110011001011 #
-b1011110011001011 5
-b1011110011001011 ;
-b1011110011001011 *
-b1011110011001011 1
-b1011110011001011 9
-b1010101110111010 "
-b1010101110111010 4
-b1010101110111010 <
-b1010101110111010 +
-b1010101110111010 2
-b1010101110111010 :
-1!
-1,
-#25000
-0(
-#30000
-1(
-#35000
-0(
-#40000
-1(
-b1010101010101010 '
-b1010101010101010 6
-b1010101010101010 7
-b1010101010101010 -
-b1010101010101010 3
-b1010101010101010 8
-b0 #
-b0 5
-b0 ;
-b0 *
-b0 1
-b0 9
-b0 "
-b0 4
-b0 <
-b0 +
-b0 2
-b0 :
-1$
-1)
-0!
 0,
-#45000
-0(
-#50000
-1(
-#55000
-0(
-#60000
-1(
-1%
-1/
-b1011101010111010 #
-b1011101010111010 5
-b1011101010111010 ;
-b1011101010111010 *
-b1011101010111010 1
-b1011101010111010 9
-b1100110011001100 "
-b1100110011001100 4
-b1100110011001100 <
-b1100110011001100 +
-b1100110011001100 2
-b1100110011001100 :
+#15000
+1'
+#20000
+b1010101110101011 &
+b1010101110101011 A
+b1010101110101011 B
+b1010101110101011 ?
+b1010101110101011 C
+b1 I
+b1 P
+b1 c
+b10101011101010111010101110101011 8
+b10101011101010111010101110101011 L
+b10101011101010111010101110101011 N
+b1 d
+b11 _
+b10 b
+1j
+1F
+1l
+1D
+1,
+b10101011101010111010101110101011 /
+b10101011101010111010101110101011 6
+b10101011101010111010101110101011 E
+b10101011101010111010101110101011 O
+10
+b1011101110111011 =
+b1011101110111011 h
+b1011101110111011 )
+b1011101110111011 2
+b1011101110111011 f
+b10111011101110111010101010101010 7
+b10111011101110111010101010101010 k
+b10111011101110111010101010101010 u
+b1010101010101010 <
+b1010101010101010 i
+b1010101010101010 *
+b1010101010101010 3
+b1010101010101010 g
+1:
+1+
+0.
+01
+#25000
+0'
+#30000
+0,
+#35000
+bx o
+bx v
+bx +"
+x$
+x;
+bx ,"
+bx n
+bx $"
+bx -"
+1'
+#40000
+b11 H
+b11 \
+b11 e
+bx %"
+b1 _
+b1 b
+1,
+b0 /
+b0 6
+b0 E
+b0 O
 00
-#65000
-0(
-#70000
+1-
+b0 =
+b0 h
+b0 )
+b0 2
+b0 f
+b0 7
+b0 k
+b0 u
+b0 <
+b0 i
+b0 *
+b0 3
+b0 g
+1>
 1(
+0:
+0+
+#45000
+0'
+#50000
+0,
