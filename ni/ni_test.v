@@ -1,5 +1,6 @@
 `include "../../fifo/async_fifo.v"
 `include "../../inst/swnet.v"
+`include "../../inst/lwnet.v"
 
 /*
 
@@ -15,11 +16,18 @@ module ni_test(
     input clk,
     input reset,
 
+    // control signal 
+    input wire core_write_en,
+    input wire core_read_en,
     // inputs from core
     input wire [RSIZE-1:0] core_wdata,
     input wire [RSIZE-1:0] core_waddr,
     // outputs to core 
     output wire core_wfull,
+    
+    output wire [RSIZE-1:0] core_rdata,
+    output wire core_rempty,
+
 
     // Outputs to NoC
 
@@ -29,10 +37,14 @@ module ni_test(
     // Temporary outputs and inputs to check 
     // beahviour of all modules 
     // for fifo write buffer
-    input wire ni_wfull;
-    output wire [RSIZE-1:0] ni_wdata;
-    output wire [RSIZE-1:0] ni_waddr;
+    input wire ni_wfull,
+    output wire [RSIZE-1:0] ni_wdata,
+    output wire [RSIZE-1:0] ni_waddr,
+    output wire ni_write_en,
     
+    input wire ni_rempty,
+    input wire [RSIZE-1:0] ni_rdata,
+    output wire ni_read_en
 
 );
 
@@ -59,7 +71,20 @@ module ni_test(
        .core_wfull(core_wfull),
        .ni_wfull(ni_wfull),
        .ni_wdata(ni_wdata),
-       .ni_waddr(ni_waddr)
+       .ni_waddr(ni_waddr),
+       .core_write_en(core_write_en),
+       .ni_write_en(ni_write_en)
+    ); 
+
+    lwnet #(.ADDRSIZE(ADDRSIZE),.MSB_SLOT(MSB_SLOT)) lw_net (
+       .clk(clk),
+       .reset(reset),
+       .core_rdata(core_rdata),
+       .core_rempty(core_rempty),
+       .ni_rempty(ni_rempty),
+       .ni_rdata(ni_rdata),
+       .core_read_en(core_read_en),
+       .ni_read_en(ni_read_en)
     ); 
     
 
