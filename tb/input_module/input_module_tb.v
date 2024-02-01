@@ -5,27 +5,39 @@ module input_module_tb();
     
     reg clk;
     reg reset;
-    reg [63:0] data_in;
-    reg read_en;
-    reg write_en;
-    wire [63:0] data_out; 
+    reg [DSIZE-1:0] data_in;
+    reg input_empty;
+    reg input_read;
+    wire [DSIZE-1:0] data_out; 
+    
+    // check if this is needed to be output
+    wire [2:0] vc_select;
+
+    `define N 3'b000
+    `define S 3'b001
+    `define E 3'b010
+    `define W 3'b011
+    `define L 3'b100
+    `define INVALID 3'b111
+
+    parameter MSB_SLOT = 5;
+    parameter DSIZE = 1<<MSB_SLOT;
+    parameter RRSIZE = 1<<MSB_SLOT-2;
 
     // input router calculations 
-    reg [2:0] port;
-    reg [15:0] router_x;
-    reg [15:0] router_y;
+    localparam [2:0] PORT = 0;
+    localparam [RRSIZE-1:0] ROUTER_X = 0;
+    localparam [RRSIZE-1:0] ROUTER_Y = 0;
 
     // Instantiate the router module
-    input_module input (
+    input_module #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y)) input (
         .clk(clk),
         .reset(reset),
         .data_in(data_in),
-        .read_en(read_en),
-        .write_en(write_en),
+        .input_empty(input_empty),
+        .input_read(input_read),
         .data_out(data_out),
-        .port(port),
-        .router_x(router_x),
-        .router_y(router_y),
+        .vc_select(vc_select)
     );
 
     integer i;
@@ -37,19 +49,16 @@ module input_module_tb();
         // Initialize signals
         clk = 1;
         reset = 1;
-        data_in;
-        read_en;
-        write_en;
 
-        port=3'b0;
-        router_x =16'h0;
-        router_y = 16'h0;
+        data_in = 32'h00010001;
+        input_empty = 1'b1;
+        input_read = 1'b0;
 
         #20;
         // Release reset
         reset = 1'b0;
 
-        flit = 64'h00010001AAAAAAAA;
+        flit = 64'hAAAAAAAA;
         port=3'b011;
         router_x =16'h0001;
         router_y = 16'h0000;

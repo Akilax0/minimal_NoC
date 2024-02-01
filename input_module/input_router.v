@@ -23,12 +23,23 @@ both xy and yx tested
 module input_router(
     input wire clk, 
     input wire reset,
-    input wire [63:0] flit,
+    input wire [DSIZE-1:0] data_in,
+
     input wire [2:0] port,
-    input wire [15:0] router_x,
-    input wire [15:0] router_y,
+    input wire [RRSIZE-1:0] router_x,
+    input wire [RRSIZE-1:0] router_y,
     output reg [2:0] vc_select
 );
+
+    parameter MSB_SLOT = 5;
+    parameter DSIZE = 1<<MSB_SLOT;
+    parameter RRSIZE = 1<<MSB_SLOT-2;
+    // xy - 1'b0
+    // yx - 1'b1 
+    parameter algorithm = 1'b0;
+
+
+
 
     // Use the flit format if needed later on -> currently going for packet based switching
     // Flit format
@@ -45,18 +56,18 @@ module input_router(
     `define INVALID 3'b111
     
     `define HEAD 2'b11
-    
-    wire [15:0] dest_x,dest_y;
-    
-    assign dest_x = flit[63:48]; 
-    assign dest_y = flit[47:32]; 
 
+    
+    wire [RRSIZE-1:0] dest_x,dest_y;
+    
+    assign dest_x = data_in[DSIZE-1:DSIZE-RRSIZE]; 
+    assign dest_y = data_in[DSIZE-RRSIZE-1:DSIZE-RRSIZE-RRSIZE]; 
 
-    // XY algorithm 
-    // First send in X direction 
-    // Then Y direction
     always @ (*)begin
-        // if ( flit[1:0] == `HEAD  )begin
+        if ( algorithm == 1'b0 )begin
+        // XY algorithm 
+        // First send in X direction 
+        // Then Y direction
             if (dest_x == router_x && dest_y == router_y)begin
                 vc_select = `L;
             end
@@ -80,37 +91,37 @@ module input_router(
             // check if this works to avoid packets be sending back to source 
             if(vc_select == port )
                 vc_select = `INVALID;
-        // end
+        end
+        else begin
+
+            // YX algorithm 
+            // First y direction 
+            // Then x direction 
+            if (dest_x == router_x && dest_y == router_y)begin
+                vc_select = `L;
+            end
+            else if (dest_y == router_y)begin
+                if(dest_x < router_x)begin
+                    vc_select = `W;
+                end
+                else begin
+                    vc_select = `E;
+                end
+            end
+            else begin
+                if(dest_y > router_y)begin
+                    vc_select = `S;
+                end
+                else begin
+                    vc_select = `N;
+                end
+            end
+
+            if(vc_select == port )
+                vc_select = `INVALID;
+                
+        end
     end
 
-    // // YX algorithm 
-    // // First y direction 
-    // // Then x direction 
-    // always @ (*)begin
-    //     // if ( flit[1:0] == `HEAD  )begin
-    //         if (dest_x == router_x && dest_y == router_y)begin
-    //             vc_select = `L;
-    //         end
-    //         else if (dest_y == router_y)begin
-    //             if(dest_x < router_x)begin
-    //                 vc_select = `W;
-    //             end
-    //             else begin
-    //                 vc_select = `E;
-    //             end
-    //         end
-    //         else begin
-    //             if(dest_y > router_y)begin
-    //                 vc_select = `S;
-    //             end
-    //             else begin
-    //                 vc_select = `N;
-    //             end
-    //         end
-
-    //         if(vc_select == port )
-    //             vc_select = `INVALID;
-    //     // end
-    // end
 
 endmodule

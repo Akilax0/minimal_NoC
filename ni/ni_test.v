@@ -103,7 +103,6 @@ module ni_test(
     // create the immediate wires
     // concat addr and data or divide them from moving to and from FIFO as 
     // the FIFOs hold 32bit entries
-    
     assign write_data = {ni_waddr, ni_wdata};
     assign ni_rdata = read_data[15:0]; 
 

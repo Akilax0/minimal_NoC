@@ -5,17 +5,21 @@ module input_router_tb();
     
     reg clk;
     reg reset;
-    reg [63:0] flit;
+    reg [DSIZE-1:0] data_in;
     reg [2:0] port;
-    reg [15:0] router_x;
-    reg [15:0] router_y;
+    reg [RRSIZE-1:0] router_x;
+    reg [RRSIZE-1:0] router_y;
     wire [2:0] vc_select;
+    
+    localparam MSB_SLOT = 5;
+    localparam DSIZE = 1<<MSB_SLOT;
+    localparam RRSIZE = 1<<MSB_SLOT-2;
 
     // Instantiate the router module
-    input_router router (
+    input_router #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE)) router (
         .clk(clk),
         .reset(reset),
-        .flit(flit),
+        .data_in(data_in),
         .port(port),
         .router_x(router_x),
         .router_y(router_y),
@@ -31,42 +35,42 @@ module input_router_tb();
         // Initialize signals
         clk = 1;
         reset = 1;
-        flit = 64'h0;
+        data_in = 32'h0;
         port=3'b0;
-        router_x =16'h0;
-        router_y = 16'h0;
+        router_x =8'h0;
+        router_y = 8'h0;
 
         #20;
         // Release reset
         reset = 1'b0;
 
-        flit = 64'h00010001AAAAAAAA;
-        port=3'b011;
-        router_x =16'h0001;
-        router_y = 16'h0000;
+        data_in = 32'h0100BBBB;
+        port=3'b000;
+        router_x =8'h00;
+        router_y = 8'h00;
+        // should select E
+
+        #20;
+
+        data_in = 32'h00000001;
+        port=3'b000;
+        router_x =8'h01;
+        router_y = 8'h00;
+        //should select W
+
+        #20;
+        data_in = 32'h0000BBBB;
+        port=3'b001;
+        router_x =8'h00;
+        router_y = 8'h01;
+        // should select N
+
+        #20;
+        data_in = 32'h00010000;
+        port=3'b000;
+        router_x =8'h00;
+        router_y = 8'h00;
         // should select S
-
-        #20;
-
-        flit = 64'h00010001CCCCCCCC;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0001;
-        //should select E
-
-        #20;
-        flit = 64'h00010001BBBBBBBB;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0000;
-        // what does this select E?
-        // 
-
-        #20;
-        flit = 64'h00000000BBBBBBBB;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0001;
 
         #40;
         reset = 0;
