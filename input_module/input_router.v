@@ -25,9 +25,6 @@ module input_router(
     input wire reset,
     input wire [DSIZE-1:0] data_in,
 
-    input wire [2:0] port,
-    input wire [RRSIZE-1:0] router_x,
-    input wire [RRSIZE-1:0] router_y,
     output reg [2:0] vc_select
 );
 
@@ -37,6 +34,9 @@ module input_router(
     // xy - 1'b0
     // yx - 1'b1 
     parameter algorithm = 1'b0;
+    parameter  [2:0] PORT = 0; 
+    parameter  [RRSIZE-1:0] ROUTER_X = 0;
+    parameter  [RRSIZE-1:0] ROUTER_Y = 0;
 
 
 
@@ -68,11 +68,11 @@ module input_router(
         // XY algorithm 
         // First send in X direction 
         // Then Y direction
-            if (dest_x == router_x && dest_y == router_y)begin
+            if (dest_x == ROUTER_X && dest_y == ROUTER_Y)begin
                 vc_select = `L;
             end
-            else if (dest_x == router_x)begin
-                if(dest_y < router_y)begin
+            else if (dest_x == ROUTER_X)begin
+                if(dest_y < ROUTER_Y)begin
                     vc_select = `N;
                 end
                 else begin
@@ -80,7 +80,7 @@ module input_router(
                 end
             end
             else begin
-                if(dest_x > router_x)begin
+                if(dest_x > ROUTER_X)begin
                     vc_select = `E;
                 end
                 else begin
@@ -89,7 +89,7 @@ module input_router(
             end
 
             // check if this works to avoid packets be sending back to source 
-            if(vc_select == port )
+            if(vc_select == PORT )
                 vc_select = `INVALID;
         end
         else begin
@@ -97,11 +97,11 @@ module input_router(
             // YX algorithm 
             // First y direction 
             // Then x direction 
-            if (dest_x == router_x && dest_y == router_y)begin
+            if (dest_x == ROUTER_X && dest_y == ROUTER_Y)begin
                 vc_select = `L;
             end
-            else if (dest_y == router_y)begin
-                if(dest_x < router_x)begin
+            else if (dest_y == ROUTER_Y)begin
+                if(dest_x < ROUTER_X)begin
                     vc_select = `W;
                 end
                 else begin
@@ -109,7 +109,7 @@ module input_router(
                 end
             end
             else begin
-                if(dest_y > router_y)begin
+                if(dest_y > ROUTER_Y)begin
                     vc_select = `S;
                 end
                 else begin
@@ -117,7 +117,7 @@ module input_router(
                 end
             end
 
-            if(vc_select == port )
+            if(vc_select == PORT )
                 vc_select = `INVALID;
                 
         end

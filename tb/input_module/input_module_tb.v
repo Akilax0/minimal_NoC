@@ -7,7 +7,7 @@ module input_module_tb();
     reg reset;
     reg [DSIZE-1:0] data_in;
     reg input_empty;
-    reg input_read;
+    wire input_read;
     wire [DSIZE-1:0] data_out; 
     
     // check if this is needed to be output
@@ -25,12 +25,13 @@ module input_module_tb();
     parameter RRSIZE = 1<<MSB_SLOT-2;
 
     // input router calculations 
-    localparam [2:0] PORT = 0;
-    localparam [RRSIZE-1:0] ROUTER_X = 0;
-    localparam [RRSIZE-1:0] ROUTER_Y = 0;
+    localparam [2:0] PORT = 3'b000;
+    localparam [RRSIZE-1:0] ROUTER_X = 1;
+    localparam [RRSIZE-1:0] ROUTER_Y = 1;
+    parameter algorithm = 0;
 
     // Instantiate the router module
-    input_module #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y)) input (
+    input_module #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y),.algorithm(algorithm)) im (
         .clk(clk),
         .reset(reset),
         .data_in(data_in),
@@ -43,48 +44,40 @@ module input_module_tb();
     integer i;
     // VCD dump file
     initial begin
-        $dumpfile("input_module.vcd");
+        $dumpfile("input_module_tb.vcd");
         $dumpvars(0, input_module_tb);
 
         // Initialize signals
         clk = 1;
         reset = 1;
 
-        data_in = 32'h00010001;
+        data_in = 32'h01010001;
         input_empty = 1'b1;
-        input_read = 1'b0;
 
         #20;
         // Release reset
-        reset = 1'b0;
+        reset = 0;
 
-        flit = 64'hAAAAAAAA;
-        port=3'b011;
-        router_x =16'h0001;
-        router_y = 16'h0000;
-        // should select S
+        data_in = 32'h01000001;
+        input_empty = 1'b1;
+        // North but same port
 
         #20;
 
-        flit = 64'h00010001CCCCCCCC;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0001;
-        //should select E
+
+        data_in = 32'h01020001;
+        input_empty = 1'b1;
+        //South
 
         #20;
-        flit = 64'h00010001BBBBBBBB;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0000;
-        // what does this select E?
-        // 
+        data_in = 32'h00010001;
+        input_empty = 1'b1;
+        // West
 
         #20;
-        flit = 64'h00000000BBBBBBBB;
-        port=3'b000;
-        router_x =16'h0000;
-        router_y = 16'h0001;
+        data_in = 32'h02010001;
+        input_empty = 1'b1;
+        // East
 
         #40;
         reset = 0;

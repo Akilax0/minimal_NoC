@@ -27,15 +27,16 @@ module gp_fifo(
 );
 
 
-    parameter LENGTH = 32;
     // this is one less than MSB thie is for the length of fifo (32bit -> 5 )
     // `define MSB_SLOT 4
     parameter MSB_SLOT = 5;
-    parameter DEPTH =  32;
+    parameter ADDRSIZE = 5;
+    parameter DSIZE = 1<<MSB_SLOT;
+    parameter DEPTH = 1<<ADDRSIZE;
 
 
 
-    reg [DEPTH-1:0] fifo_ff [LENGTH-1:0]; 
+    reg [DEPTH-1:0] fifo_ff [DSIZE-1:0]; 
     reg [MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
 
     always@*begin

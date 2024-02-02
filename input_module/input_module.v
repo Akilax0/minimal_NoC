@@ -16,13 +16,13 @@ VC buffers are
 CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 */
 
-`include "input_module/input_router.v"
-`include "input_module/input_controller.v"
-`include "utils/vc_buffer.v"
-`include "utils/rr_arbiter.v"
-`include "utils/demux_1to5.v"
-`include "utils/mux_5to1.v"
-`include "utils/mux_5to1_64bit.v"
+`include "../../input_module/input_router.v"
+`include "../../input_module/input_controller.v"
+// `include "../../utils/vc_buffer.v"
+// `include "../../utils/rr_arbiter.v"
+// `include "../../utils/demux_1to5.v"
+// `include "../../utils/mux_5to1.v"
+// `include "../../utils/mux_5to1_64bit.v"
 
 module input_module(
     input wire clk, 
@@ -32,7 +32,7 @@ module input_module(
     input wire input_empty,
     output wire input_read,
 
-    output wire [DSIZE-1:0] data_out
+    output wire [DSIZE-1:0] data_out,
 
     // // input router calculations 
     // // These are unique to the considered router
@@ -41,7 +41,7 @@ module input_module(
     // input wire [RRSIZE-1:0] router_y;
     
     // check if this is needed to be output
-    output wire [2:0] vc_select;
+    output wire [2:0] vc_select
     
     // // for output module flow control
     // // [L,W,E,S,N]
@@ -68,9 +68,10 @@ module input_module(
     parameter [2:0] PORT = 0;
     parameter [RRSIZE-1:0] ROUTER_X = 0;
     parameter [RRSIZE-1:0] ROUTER_Y = 0;
+    parameter algorithm = 0;
 
     // signal to check virtual buffers have empty space
-    wire buffer_empty;
+    wire buffer_empty=0;
     
     input_controller controller(
         .clk(clk),
@@ -85,19 +86,16 @@ module input_module(
     // Need additional check to not pass back 
     // Only consider as data packets 
 
-    input_router router(
+    input_router#(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.algorithm(algorithm),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y)) ir(
         .clk(clk), 
         .reset(reset),
         .data_in(data_in),
-        .port(port),
-        .router_x(router_x),
-        .router_y(router_y),
         .vc_select(vc_select) // check if this is needed to be output
     );
     
 
-    // reg write_en_N, write_en_S, write_en_E, write_en_W;
-    // reg read_en_N, read_en_S, read_en_E, read_en_W;
+    reg write_en_N, write_en_S, write_en_E, write_en_W;
+    reg read_en_N, read_en_S, read_en_E, read_en_W;
     
     // wire error_N, error_S,error_E,error_W;
     // wire full_N,full_S,full_E,full_W;
@@ -116,7 +114,7 @@ module input_module(
     // wire [63:0] data_N, data_S,data_E, data_W, data_L;
     
 
-    // demux_1to5 write_en(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
+    demux_1to5 write_en(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
     // demux_1to5 read_en(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
     
     // mux_5to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
@@ -128,70 +126,70 @@ module input_module(
     // // add  for ocup to check flow control
 
 
-    // vc_buffer vc_N(
-    //     clk,
-    //     reset,
-    //     write_en_N,
-    //     read_en_N,
-    //     data_in,
-    //     data_N,
-    //     error_N,
-    //     full_N,
-    //     empty_N,
-    //     ocup_N
-    // );
+    vc_buffer vc_N(
+        clk,
+        reset,
+        write_en_N,
+        read_en_N,
+        data_in,
+        data_N,
+        error_N,
+        full_N,
+        empty_N,
+        ocup_N
+    );
 
-    // vc_buffer vc_S(
-    //     clk,
-    //     reset,
-    //     write_en_S,
-    //     read_en_S,
-    //     data_in,
-    //     data_S,
-    //     error_S,
-    //     fullS_S,
-    //     empty_S,
-    //     ocup_S
-    // );
+    vc_buffer vc_S(
+        clk,
+        reset,
+        write_en_S,
+        read_en_S,
+        data_in,
+        data_S,
+        error_S,
+        fullS_S,
+        empty_S,
+        ocup_S
+    );
 
-    // vc_buffer vc_E(
-    //     clk,
-    //     reset,
-    //     write_en_E,
-    //     read_en_E,
-    //     data_in,
-    //     data_E,
-    //     error_E,
-    //     full_E,
-    //     empty_E,
-    //     ocup_E
-    // );
+    vc_buffer vc_E(
+        clk,
+        reset,
+        write_en_E,
+        read_en_E,
+        data_in,
+        data_E,
+        error_E,
+        full_E,
+        empty_E,
+        ocup_E
+    );
 
-    // vc_buffer vc_W(
-    //     clk,
-    //     reset,
-    //     write_en_W,
-    //     read_en_W,
-    //     data_in,
-    //     data_W,
-    //     error_W,
-    //     full_W,
-    //     empty_W,
-    //     ocup_W
-    // );
+    vc_buffer vc_W(
+        clk,
+        reset,
+        write_en_W,
+        read_en_W,
+        data_in,
+        data_W,
+        error_W,
+        full_W,
+        empty_W,
+        ocup_W
+    );
 
-    // vc_buffer vc_L(
-    //     clk,
-    //     reset,
-    //     write_en_L,
-    //     read_en_L,
-    //     data_in,
-    //     data_L,
-    //     error_L,
-    //     full_L,
-    //     empty_L,
-    //     ocup_L
-    // );
+    vc_buffer vc_L(
+        clk,
+        reset,
+        write_en_L,
+        read_en_L,
+        data_in,
+        data_L,
+        error_L,
+        full_L,
+        empty_L,
+        ocup_L
+    );
 
 
     // rr_arbiter arb(

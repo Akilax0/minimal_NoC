@@ -52,4 +52,4 @@ Module to handle SWNET instruction. Currently assuming the input is write data. 
 - https://github.com/aignacio/ravenoc
 - Cummings aync FIFO
 - https://www.cse.iitd.ac.in/~srsarangi/advbook/index.html
-- SUNGHO PARK Master Thesis
+- Virtual Channel - https://oaktrust.library.tamu.edu/bitstream/handle/1969.1/ETD-TAMU-2890/PARK-THESIS.pdf?sequence=1&isAllowed=y
