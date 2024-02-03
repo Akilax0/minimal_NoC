@@ -7,6 +7,7 @@ module input_module_tb();
     reg reset;
     reg [DSIZE-1:0] data_in;
     reg input_empty;
+    reg read_en;
     wire input_read;
     wire [DSIZE-1:0] data_out; 
     
@@ -41,6 +42,7 @@ module input_module_tb();
         .input_empty(input_empty),
         .input_read(input_read),
         .data_out(data_out),
+        .read_en(read_en),
         .vc_select(vc_select)
     );
 
@@ -56,6 +58,7 @@ module input_module_tb();
 
         data_in = 32'h01010001;
         input_empty = 1'b1;
+        read_en = 1'b0;
 
         #20;
         // Release reset
@@ -65,6 +68,7 @@ module input_module_tb();
 
         data_in = 32'h01000001;
         input_empty = 1'b1;
+        read_en = 1'b0;
         // North but same port
 
         #20;
@@ -72,16 +76,25 @@ module input_module_tb();
 
         data_in = 32'h01020001;
         input_empty = 1'b1;
+        read_en = 1'b0;
         //South
 
         #20;
         data_in = 32'h00010001;
         input_empty = 1'b1;
+        read_en = 1'b0;
         // West
 
         #20;
         data_in = 32'h02010001;
         input_empty = 1'b1;
+        read_en = 1'b0;
+        // East
+
+        #20;
+        data_in = 32'h02010001;
+        input_empty = 1'b1;
+        read_en = 1'b1;
         // East
 
         #40;

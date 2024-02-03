@@ -19,7 +19,7 @@ CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 `include "../../input_module/input_router.v"
 `include "../../input_module/input_controller.v"
 `include "../../fifo/vc_buffer.v"
-// `include "../../utils/rr_arbiter.v"
+`include "../../utils/rr_arbiter.v"
 `include "../../utils/demux_1to5.v"
 // `include "../../utils/mux_5to1.v"
 // `include "../../utils/mux_5to1_64bit.v"
@@ -34,11 +34,10 @@ module input_module(
 
     output wire [DSIZE-1:0] data_out,
 
-    // // input router calculations 
-    // // These are unique to the considered router
-    // input wire [2:0] port;
-    // input wire [RRSIZE-1:0] router_x;
-    // input wire [RRSIZE-1:0] router_y;
+
+    // signal from output side to read from vc_buffers
+    input wire read_en,
+    
     
     // check if this is needed to be output
     output wire [2:0] vc_select
@@ -74,8 +73,16 @@ module input_module(
     parameter algorithm = 0;
 
     // signal to check virtual buffers have empty space
-    wire buffer_empty=0;
+    wire buffer_empty;
+    wire write_en;
+    wire [4:0] read_empty;
+
+    assign buffer_empty = !full_N && !full_S && !full_E && !full_W && !full_L;
+    assign write_en = (vc_select!=`INVALID && !reset)? 1'b1 : 1'b0;
+    // assign read_empty = !empty_N || !empty_E || !empty_L || !empty_S || !empty_W; 
     
+    assign read_empty = {!empty_L,!empty_W,!empty_E,!empty_S,!empty_N}; // 5 request inputs , and with not full 
+
     input_controller controller(
         .clk(clk),
         .reset(reset),
@@ -98,18 +105,18 @@ module input_module(
     
 
     wire write_en_N, write_en_S, write_en_E, write_en_W;
-    reg read_en_N, read_en_S, read_en_E, read_en_W;
+    wire read_en_N, read_en_S, read_en_E, read_en_W;
     
     wire error_N, error_S,error_E,error_W;
     wire full_N,full_S,full_E,full_W;
     wire empty_N,empty_S,empty_E,empty_W;
     wire [MSB_SLOT-1:0] ocup_N,ocup_S,ocup_E,ocup_W;
     
-    // wire [2:0] rr_select;
+    wire [2:0] rr_select;
 
     // // for Local port
     wire write_en_L;
-    reg read_en_L;
+    wire read_en_L;
     wire error_L, full_L, empty_L;
     wire [MSB_SLOT-1:0] ocup_L;
     
@@ -119,10 +126,10 @@ module input_module(
     
     // write_en is going to be set to 1'b1 . Remove this if write en is going to be conditional
     // This should be discussed
-    demux_1to5 write_en(~reset,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
+    demux_1to5 write_enable(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
     
-    
-    // demux_1to5 read_en(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
+
+    demux_1to5 read_enable(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
     
     // mux_5to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
     // mux_5to1 empty({empty_N,empty_S,empty_E,empty_W,empty_L},rr_select,empty);
@@ -153,7 +160,7 @@ module input_module(
         data_in,
         data_S,
         error_S,
-        fullS_S,
+        full_S,
         empty_S,
         ocup_S
     );
@@ -198,11 +205,11 @@ module input_module(
     );
 
 
-    // rr_arbiter arb(
-    //   clk,
-    //   reset,
-    //   input wire [4:0] {!empty_L,!empty_W,!empty_E,!empty_S, !empty_N}, // 5 request inputs , and with not full 
-    //   output reg [2:0] rr_select
-    // );
+    rr_arbiter arb(
+        clk,
+        reset,
+        read_empty,  // input wire [4:0] {!empty_L,!empty_W,!empty_E,!empty_S,!empty_N}, // 5 request inputs , and with not full 
+        rr_select
+    );
 
 endmodule

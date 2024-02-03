@@ -197,8 +197,7 @@ module rr_arbiter(
   end  
   
 
-  always @(state)
-    begin
+  always @(state) begin
       case(state)
         s0: begin grant=`N; end
         s1: begin grant=`S; end
@@ -206,7 +205,7 @@ module rr_arbiter(
         s3: begin grant=`W; end
         s4: begin grant=`L; end
         default: begin grant = `INVALID; end
-    end
-  endmodule
+      endcase
+  end
 
 endmodule
