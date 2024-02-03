@@ -1,5 +1,5 @@
 $date
-	Fri Feb  2 07:58:43 2024
+	Sat Feb  3 07:38:49 2024
 $end
 $version
 	Icarus Verilog
@@ -22,8 +22,43 @@ $var wire 32 ) data_in [31:0] $end
 $var wire 32 * data_out [31:0] $end
 $var wire 1 & input_empty $end
 $var wire 1 ' reset $end
-$var wire 3 + vc_select [2:0] $end
+$var wire 1 + write_en_W $end
+$var wire 1 , write_en_S $end
+$var wire 1 - write_en_N $end
+$var wire 1 . write_en_L $end
+$var wire 1 / write_en_E $end
+$var wire 3 0 vc_select [2:0] $end
+$var wire 5 1 ocup_W [4:0] $end
+$var wire 5 2 ocup_S [4:0] $end
+$var wire 5 3 ocup_N [4:0] $end
+$var wire 5 4 ocup_L [4:0] $end
+$var wire 5 5 ocup_E [4:0] $end
 $var wire 1 # input_read $end
+$var wire 1 6 full_W $end
+$var wire 1 7 full_N $end
+$var wire 1 8 full_L $end
+$var wire 1 9 full_E $end
+$var wire 1 : fullS_S $end
+$var wire 1 ; error_W $end
+$var wire 1 < error_S $end
+$var wire 1 = error_N $end
+$var wire 1 > error_L $end
+$var wire 1 ? error_E $end
+$var wire 1 @ empty_W $end
+$var wire 1 A empty_S $end
+$var wire 1 B empty_N $end
+$var wire 1 C empty_L $end
+$var wire 1 D empty_E $end
+$var wire 32 E data_W [31:0] $end
+$var wire 32 F data_S [31:0] $end
+$var wire 32 G data_N [31:0] $end
+$var wire 32 H data_L [31:0] $end
+$var wire 32 I data_E [31:0] $end
+$var reg 1 J read_en_E $end
+$var reg 1 K read_en_L $end
+$var reg 1 L read_en_N $end
+$var reg 1 M read_en_S $end
+$var reg 1 N read_en_W $end
 $scope module controller $end
 $var wire 1 ( buffer_empty $end
 $var wire 1 $ clk $end
@@ -33,22 +68,203 @@ $var reg 1 # input_read $end
 $upscope $end
 $scope module ir $end
 $var wire 1 $ clk $end
-$var wire 32 , data_in [31:0] $end
+$var wire 32 O data_in [31:0] $end
 $var wire 1 ' reset $end
-$var wire 8 - dest_y [7:0] $end
-$var wire 8 . dest_x [7:0] $end
-$var reg 3 / vc_select [2:0] $end
+$var wire 8 P dest_y [7:0] $end
+$var wire 8 Q dest_x [7:0] $end
+$var reg 3 R vc_select [2:0] $end
+$upscope $end
+$scope module vc_E $end
+$var wire 1 $ clk $end
+$var wire 32 S data_in [31:0] $end
+$var wire 1 J read_en $end
+$var wire 1 ' reset $end
+$var wire 1 / write_en $end
+$var reg 32 T data_out [31:0] $end
+$var reg 1 D empty $end
+$var reg 1 ? error $end
+$var reg 6 U fifo_ocup [5:0] $end
+$var reg 1 9 full $end
+$var reg 6 V next_read_ptr [5:0] $end
+$var reg 6 W next_write_ptr [5:0] $end
+$var reg 5 X ocup [4:0] $end
+$var reg 6 Y read_ptr_ff [5:0] $end
+$var reg 6 Z write_ptr_ff [5:0] $end
+$var integer 32 [ i [31:0] $end
+$upscope $end
+$scope module vc_L $end
+$var wire 1 $ clk $end
+$var wire 32 \ data_in [31:0] $end
+$var wire 1 K read_en $end
+$var wire 1 ' reset $end
+$var wire 1 . write_en $end
+$var reg 32 ] data_out [31:0] $end
+$var reg 1 C empty $end
+$var reg 1 > error $end
+$var reg 6 ^ fifo_ocup [5:0] $end
+$var reg 1 8 full $end
+$var reg 6 _ next_read_ptr [5:0] $end
+$var reg 6 ` next_write_ptr [5:0] $end
+$var reg 5 a ocup [4:0] $end
+$var reg 6 b read_ptr_ff [5:0] $end
+$var reg 6 c write_ptr_ff [5:0] $end
+$var integer 32 d i [31:0] $end
+$upscope $end
+$scope module vc_N $end
+$var wire 1 $ clk $end
+$var wire 32 e data_in [31:0] $end
+$var wire 1 L read_en $end
+$var wire 1 ' reset $end
+$var wire 1 - write_en $end
+$var reg 32 f data_out [31:0] $end
+$var reg 1 B empty $end
+$var reg 1 = error $end
+$var reg 6 g fifo_ocup [5:0] $end
+$var reg 1 7 full $end
+$var reg 6 h next_read_ptr [5:0] $end
+$var reg 6 i next_write_ptr [5:0] $end
+$var reg 5 j ocup [4:0] $end
+$var reg 6 k read_ptr_ff [5:0] $end
+$var reg 6 l write_ptr_ff [5:0] $end
+$var integer 32 m i [31:0] $end
+$upscope $end
+$scope module vc_S $end
+$var wire 1 $ clk $end
+$var wire 32 n data_in [31:0] $end
+$var wire 1 M read_en $end
+$var wire 1 ' reset $end
+$var wire 1 , write_en $end
+$var reg 32 o data_out [31:0] $end
+$var reg 1 A empty $end
+$var reg 1 < error $end
+$var reg 6 p fifo_ocup [5:0] $end
+$var reg 1 : full $end
+$var reg 6 q next_read_ptr [5:0] $end
+$var reg 6 r next_write_ptr [5:0] $end
+$var reg 5 s ocup [4:0] $end
+$var reg 6 t read_ptr_ff [5:0] $end
+$var reg 6 u write_ptr_ff [5:0] $end
+$var integer 32 v i [31:0] $end
+$upscope $end
+$scope module vc_W $end
+$var wire 1 $ clk $end
+$var wire 32 w data_in [31:0] $end
+$var wire 1 N read_en $end
+$var wire 1 ' reset $end
+$var wire 1 + write_en $end
+$var reg 32 x data_out [31:0] $end
+$var reg 1 @ empty $end
+$var reg 1 ; error $end
+$var reg 6 y fifo_ocup [5:0] $end
+$var reg 1 6 full $end
+$var reg 6 z next_read_ptr [5:0] $end
+$var reg 6 { next_write_ptr [5:0] $end
+$var reg 5 | ocup [4:0] $end
+$var reg 6 } read_ptr_ff [5:0] $end
+$var reg 6 ~ write_ptr_ff [5:0] $end
+$var integer 32 !" i [31:0] $end
+$upscope $end
+$scope module write_en $end
+$var wire 3 "" ctrl [2:0] $end
+$var wire 1 #" data_input $end
+$var wire 1 . out4 $end
+$var wire 1 + out3 $end
+$var wire 1 / out2 $end
+$var wire 1 , out1 $end
+$var wire 1 - out0 $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b100 /
-b1 .
-b1 -
-b1000000010000000000000001 ,
-b100 +
+0#"
+b100 ""
+b100000 !"
+b0 ~
+b0 }
+b0 |
+b0 {
+b0 z
+b0 y
+b0 x
+b1000000010000000000000001 w
+b100000 v
+b0 u
+b0 t
+b0 s
+b0 r
+b0 q
+b0 p
+b0 o
+b1000000010000000000000001 n
+b100000 m
+b0 l
+b0 k
+b0 j
+b0 i
+b0 h
+b0 g
+b0 f
+b1000000010000000000000001 e
+b100000 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b1000000010000000000000001 \
+b100000 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b1000000010000000000000001 S
+b100 R
+b1 Q
+b1 P
+b1000000010000000000000001 O
+xN
+xM
+xL
+xK
+xJ
+b0 I
+b0 H
+b0 G
+b0 F
+b0 E
+1D
+1C
+1B
+1A
+1@
+x?
+x>
+x=
+x<
+x;
+0:
+09
+08
+07
+06
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+b100 0
+0/
+0.
+0-
+0,
+0+
 bz *
 b1000000010000000000000001 )
 0(
@@ -63,34 +279,56 @@ $end
 #5000
 0$
 #10000
+b100000 d
+b100000 !"
+b100000 [
+b100000 v
+b100000 m
 1$
 #15000
 0$
 #20000
-b111 "
-b111 +
-b111 /
-b0 -
+b1 `
+1.
+1#"
 1$
-b1000000000000000000000001 %
-b1000000000000000000000001 )
-b1000000000000000000000001 ,
 0'
 #25000
 0$
 #30000
+b1 4
+b1 a
+b1 ^
+0>
+b10 `
+b1000000010000000000000001 H
+b1000000010000000000000001 ]
+0C
+b1 c
 1$
 #35000
 0$
 #40000
-b1 "
-b1 +
-b1 /
-b10 -
+b10 4
+b10 a
+b10 ^
+b10 c
+b10 `
+0.
+b111 "
+b111 0
+b111 R
+b111 ""
+b0 P
 1$
-b1000000100000000000000001 %
-b1000000100000000000000001 )
-b1000000100000000000000001 ,
+b1000000000000000000000001 %
+b1000000000000000000000001 )
+b1000000000000000000000001 O
+b1000000000000000000000001 S
+b1000000000000000000000001 \
+b1000000000000000000000001 e
+b1000000000000000000000001 n
+b1000000000000000000000001 w
 #45000
 0$
 #50000
@@ -98,43 +336,136 @@ b1000000100000000000000001 ,
 #55000
 0$
 #60000
-b11 "
-b11 +
-b11 /
-b0 .
-b1 -
+b1 r
+1,
+b1 "
+b1 0
+b1 R
+b1 ""
+b10 P
 1$
-b10000000000000001 %
-b10000000000000001 )
-b10000000000000001 ,
+b1000000100000000000000001 %
+b1000000100000000000000001 )
+b1000000100000000000000001 O
+b1000000100000000000000001 S
+b1000000100000000000000001 \
+b1000000100000000000000001 e
+b1000000100000000000000001 n
+b1000000100000000000000001 w
 #65000
 0$
 #70000
+b1 2
+b1 s
+b1 p
+0<
+b10 r
+b1000000100000000000000001 F
+b1000000100000000000000001 o
+0A
+b1 u
 1$
 #75000
 0$
 #80000
-b10 "
-b10 +
-b10 /
-b10 .
+b10 2
+b10 s
+b10 p
+b10 u
+b10 r
+b1 {
+0,
+1+
+b11 "
+b11 0
+b11 R
+b11 ""
+b0 Q
+b1 P
 1$
-b10000000010000000000000001 %
-b10000000010000000000000001 )
-b10000000010000000000000001 ,
+b10000000000000001 %
+b10000000000000001 )
+b10000000000000001 O
+b10000000000000001 S
+b10000000000000001 \
+b10000000000000001 e
+b10000000000000001 n
+b10000000000000001 w
 #85000
 0$
 #90000
+b1 1
+b1 |
+b1 y
+0;
+b10 {
+b10000000000000001 E
+b10000000000000001 x
+0@
+b1 ~
 1$
 #95000
 0$
 #100000
+b10 1
+b10 |
+b10 y
+b10 ~
+b1 W
+b10 {
+1/
+0+
+b10 "
+b10 0
+b10 R
+b10 ""
+b10 Q
 1$
+b10000000010000000000000001 %
+b10000000010000000000000001 )
+b10000000010000000000000001 O
+b10000000010000000000000001 S
+b10000000010000000000000001 \
+b10000000010000000000000001 e
+b10000000010000000000000001 n
+b10000000010000000000000001 w
 #105000
 0$
 #110000
+b1 5
+b1 X
+b1 U
+0?
+b10 W
+b10000000010000000000000001 I
+b10000000010000000000000001 T
+0D
+b1 Z
 1$
 #115000
 0$
 #120000
+b10 5
+b10 X
+b10 U
+b11 W
+b10 Z
+1$
+#125000
+0$
+#130000
+b11 5
+b11 X
+b11 U
+b100 W
+b11 Z
+1$
+#135000
+0$
+#140000
+b100 5
+b100 X
+b100 U
+b101 W
+b100 Z
 1$

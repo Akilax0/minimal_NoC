@@ -18,9 +18,9 @@ CAN USE SIGNALS OF FIFO FOR LATER FLOW CONTROL
 
 `include "../../input_module/input_router.v"
 `include "../../input_module/input_controller.v"
-// `include "../../utils/vc_buffer.v"
+`include "../../fifo/vc_buffer.v"
 // `include "../../utils/rr_arbiter.v"
-// `include "../../utils/demux_1to5.v"
+`include "../../utils/demux_1to5.v"
 // `include "../../utils/mux_5to1.v"
 // `include "../../utils/mux_5to1_64bit.v"
 
@@ -64,6 +64,9 @@ module input_module(
     parameter DSIZE = 1<<MSB_SLOT;
     parameter RRSIZE = 1<<MSB_SLOT-2;
 
+    parameter ADDRSIZE = 5;
+    parameter DEPTH = 1<<ADDRSIZE;
+
     // Assigning straight 0 to avoid defining bit width 
     parameter [2:0] PORT = 0;
     parameter [RRSIZE-1:0] ROUTER_X = 0;
@@ -94,27 +97,31 @@ module input_module(
     );
     
 
-    reg write_en_N, write_en_S, write_en_E, write_en_W;
+    wire write_en_N, write_en_S, write_en_E, write_en_W;
     reg read_en_N, read_en_S, read_en_E, read_en_W;
     
-    // wire error_N, error_S,error_E,error_W;
-    // wire full_N,full_S,full_E,full_W;
-    // wire empty_N,empty_S,empty_E,empty_W;
-    // wire [4:0] ocup_N,ocup_S,ocup_E,ocup_W;
+    wire error_N, error_S,error_E,error_W;
+    wire full_N,full_S,full_E,full_W;
+    wire empty_N,empty_S,empty_E,empty_W;
+    wire [MSB_SLOT-1:0] ocup_N,ocup_S,ocup_E,ocup_W;
     
     // wire [2:0] rr_select;
 
     // // for Local port
-    // reg write_en_L, read_en_L;
-    // wire error_L, full_L, empty_L;
-    // wire [4:0] ocup_L;
+    wire write_en_L;
+    reg read_en_L;
+    wire error_L, full_L, empty_L;
+    wire [MSB_SLOT-1:0] ocup_L;
     
 
     // // Handling data out
-    // wire [63:0] data_N, data_S,data_E, data_W, data_L;
+    wire [DSIZE-1:0] data_N, data_S,data_E, data_W, data_L;
     
-
-    demux_1to5 write_en(write_en,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
+    // write_en is going to be set to 1'b1 . Remove this if write en is going to be conditional
+    // This should be discussed
+    demux_1to5 write_en(~reset,vc_select,write_en_N,write_en_S,write_en_E,write_en_W,write_en_L);
+    
+    
     // demux_1to5 read_en(read_en,rr_select,read_en_N,read_en_S,read_en_E,read_en_W,read_en_L);
     
     // mux_5to1 full({full_N,full_S,full_E,full_W,full_L},vc_select,full);
@@ -125,8 +132,7 @@ module input_module(
     
     // // add  for ocup to check flow control
 
-
-    vc_buffer vc_N(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE),.DSIZE(DSIZE),.DEPTH(DEPTH)) vc_N(
         clk,
         reset,
         write_en_N,
@@ -139,7 +145,7 @@ module input_module(
         ocup_N
     );
 
-    vc_buffer vc_S(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE),.DSIZE(DSIZE),.DEPTH(DEPTH)) vc_S(
         clk,
         reset,
         write_en_S,
@@ -152,7 +158,7 @@ module input_module(
         ocup_S
     );
 
-    vc_buffer vc_E(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE),.DSIZE(DSIZE),.DEPTH(DEPTH)) vc_E(
         clk,
         reset,
         write_en_E,
@@ -165,7 +171,7 @@ module input_module(
         ocup_E
     );
 
-    vc_buffer vc_W(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE),.DSIZE(DSIZE),.DEPTH(DEPTH)) vc_W(
         clk,
         reset,
         write_en_W,
@@ -178,7 +184,7 @@ module input_module(
         ocup_W
     );
 
-    vc_buffer vc_L(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE),.DSIZE(DSIZE),.DEPTH(DEPTH)) vc_L(
         clk,
         reset,
         write_en_L,

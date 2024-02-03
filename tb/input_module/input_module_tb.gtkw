@@ -1,0 +1,77 @@
+[*]
+[*] GTKWave Analyzer v3.3.114 (w)1999-2023 BSI
+[*] Sat Feb  3 02:10:51 2024
+[*]
+[dumpfile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/input_module/input_module_tb.vcd"
+[dumpfile_mtime] "Sat Feb  3 02:08:49 2024"
+[dumpfile_size] 7521
+[savefile] "/home/akilax0/Documents/riscv/minimal_NoC/tb/input_module/input_module_tb.gtkw"
+[timestart] 0
+[size] 1920 994
+[pos] -1 -1
+*-14.400000 50000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] input_module_tb.
+[treeopen] input_module_tb.im.
+[sst_width] 209
+[signals_width] 301
+[sst_expanded] 1
+[sst_vpaned_height] 292
+@28
+input_module_tb.clk
+@22
+input_module_tb.data_in[31:0]
+input_module_tb.data_out[31:0]
+@28
+input_module_tb.input_empty
+input_module_tb.input_read
+input_module_tb.reset
+input_module_tb.vc_select[2:0]
+input_module_tb.im.buffer_empty
+@22
+input_module_tb.im.data_E[31:0]
+input_module_tb.im.data_L[31:0]
+input_module_tb.im.data_N[31:0]
+input_module_tb.im.data_S[31:0]
+input_module_tb.im.data_W[31:0]
+input_module_tb.im.data_in[31:0]
+input_module_tb.im.data_out[31:0]
+@28
+input_module_tb.im.empty_E
+input_module_tb.im.empty_L
+input_module_tb.im.empty_N
+input_module_tb.im.empty_S
+input_module_tb.im.empty_W
+input_module_tb.im.error_E
+input_module_tb.im.error_L
+input_module_tb.im.error_N
+input_module_tb.im.error_S
+input_module_tb.im.error_W
+input_module_tb.im.fullS_S
+input_module_tb.im.full_E
+input_module_tb.im.full_L
+input_module_tb.im.full_N
+input_module_tb.im.full_W
+input_module_tb.im.input_empty
+input_module_tb.im.input_read
+@22
+input_module_tb.im.ocup_E[4:0]
+input_module_tb.im.ocup_L[4:0]
+input_module_tb.im.ocup_N[4:0]
+input_module_tb.im.ocup_S[4:0]
+input_module_tb.im.ocup_W[4:0]
+@28
+input_module_tb.im.read_en_E
+input_module_tb.im.read_en_L
+input_module_tb.im.read_en_N
+input_module_tb.im.read_en_S
+input_module_tb.im.read_en_W
+input_module_tb.im.reset
+input_module_tb.im.vc_select[2:0]
+input_module_tb.im.write_en_E
+input_module_tb.im.write_en_L
+input_module_tb.im.write_en_N
+input_module_tb.im.write_en_S
+input_module_tb.im.write_en_W
+input_module_tb.im.write_en.data_input
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,11 +1,12 @@
 `timescale 1ns / 1ps
-`include "../../fifo/gp_fifo.v"
+`include "../../fifo/vc_buffer.v"
 
-module gp_fifo_tb();
+module vc_buffer_tb();
 
-    localparam  LENGTH = 32;
-    localparam  DEPTH = 32;
-    localparam  MSB_SLOT = 5;
+    localparam MSB_SLOT = 5;
+    localparam ADDRSIZE = 5;
+    localparam DSIZE = 1<<MSB_SLOT;
+    localparam DEPTH = 1<<ADDRSIZE;
 
     // Define testbench signals
     reg clk;
@@ -20,7 +21,7 @@ module gp_fifo_tb();
     wire [MSB_SLOT:0] ocup;
 
     // Instantiate the FIFO module
-    gp_fifo #(.LENGTH(LENGTH) , .MSB_SLOT(MSB_SLOT), .DEPTH(DEPTH)) my_fifo(
+    vc_buffer #(.MSB_SLOT(MSB_SLOT),.ADDRSIZE(ADDRSIZE), .DSIZE(DSIZE), .DEPTH(DEPTH)) my_fifo(
         .clk(clk),
         .reset(reset),
         .write_en(write_en),
@@ -33,10 +34,15 @@ module gp_fifo_tb();
         .ocup(ocup)
     );
 
+    integer i;
+
     // VCD dump file
     initial begin
-        $dumpfile("gp_fifo_tb.vcd");
-        $dumpvars(0, gp_fifo_tb);
+        $dumpfile("vc_buffer_tb.vcd");
+        $dumpvars(0, vc_buffer_tb);
+        
+        for(i = 0; i < 32; i = i + 1)
+            $dumpvars(1, vc_buffer_tb.my_fifo.fifo_ff[i]);
 
         // Initialize signals
         clk = 1;

@@ -20,18 +20,21 @@ module input_module_tb();
     `define L 3'b100
     `define INVALID 3'b111
 
-    parameter MSB_SLOT = 5;
-    parameter DSIZE = 1<<MSB_SLOT;
-    parameter RRSIZE = 1<<MSB_SLOT-2;
+    localparam MSB_SLOT = 5;
+    localparam DSIZE = 1<<MSB_SLOT;
+    localparam RRSIZE = 1<<MSB_SLOT-2;
+
+    localparam ADDRSIZE = 5;
+    localparam DEPTH = 1<<ADDRSIZE;
 
     // input router calculations 
     localparam [2:0] PORT = 3'b000;
     localparam [RRSIZE-1:0] ROUTER_X = 1;
     localparam [RRSIZE-1:0] ROUTER_Y = 1;
-    parameter algorithm = 0;
+    localparam algorithm = 0;
 
     // Instantiate the router module
-    input_module #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y),.algorithm(algorithm)) im (
+    input_module #(.MSB_SLOT(MSB_SLOT),.DSIZE(DSIZE),.RRSIZE(RRSIZE),.ADDRSIZE(ADDRSIZE),.DEPTH(DEPTH),.PORT(PORT),.ROUTER_X(ROUTER_X),.ROUTER_Y(ROUTER_Y),.algorithm(algorithm)) im (
         .clk(clk),
         .reset(reset),
         .data_in(data_in),
@@ -57,6 +60,8 @@ module input_module_tb();
         #20;
         // Release reset
         reset = 0;
+        
+        #20;
 
         data_in = 32'h01000001;
         input_empty = 1'b1;

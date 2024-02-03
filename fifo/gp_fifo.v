@@ -6,13 +6,9 @@ Descripton: Simple FIFO module
 General purpose FIFO to handle the read and write buffer.
 The whole FIFO runs on the same clock domain (ie. not the async version )
 
-The below can be changed with the use of parameters
-32 slots of 32 bits
-
 Tested for same time reads and writes
 
 */
-//  #(parameter LENGTH = 32 , MSB_SLOT = 4, DEPTH = 32)
 module gp_fifo(
     input clk,
     input reset,
@@ -27,8 +23,6 @@ module gp_fifo(
 );
 
 
-    // this is one less than MSB thie is for the length of fifo (32bit -> 5 )
-    // `define MSB_SLOT 4
     parameter MSB_SLOT = 5;
     parameter ADDRSIZE = 5;
     parameter DSIZE = 1<<MSB_SLOT;

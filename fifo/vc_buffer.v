@@ -1,42 +1,46 @@
 /*
 
 File: vc_buffer.v
-Descripton: Virtual Buffer where internally FIFO
+Descripton: virtual channel buffer derived from FIFO module
 
-Virtual buffers to be use in input and 
-output modules of the noc
+Same as general purpose FIFO all reads and writes 
+happen within a same clock domain
 
-32 slots of 64 bits
 
 */
-
 module vc_buffer(
     input clk,
     input reset,
     input write_en,
     input read_en,
-    input [63:0] data_in,
-    output reg [63:0] data_out,
+    input [DEPTH-1:0] data_in,
+    output reg [DEPTH-1:0] data_out,
     output reg error,
     output reg full,
     output reg empty,
-    output reg [4:0] ocup
+    output reg [MSB_SLOT-1:0] ocup
 );
 
-    // this is one less than MSB (32bit -> 5 )
-    `define MSB_SLOT 4
 
-    reg [63:0] fifo_ff [31:0]; 
-    reg [`MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
+    parameter MSB_SLOT = 5;
+    parameter ADDRSIZE = 5;
+    parameter DSIZE = 1<<MSB_SLOT;
+    parameter DEPTH = 1<<ADDRSIZE;
+
+
+
+    reg [DEPTH-1:0] fifo_ff [DSIZE-1:0]; 
+    reg [MSB_SLOT:0] write_ptr_ff,read_ptr_ff, next_write_ptr, next_read_ptr,fifo_ocup;
 
     always@*begin
         next_read_ptr = read_ptr_ff;
         next_write_ptr = write_ptr_ff;
 
         empty = (write_ptr_ff == read_ptr_ff);
-        full = (write_ptr_ff[`MSB_SLOT-1:0] == read_ptr_ff[`MSB_SLOT-1:0] )  && (write_ptr_ff[`MSB_SLOT]!= read_ptr_ff[`MSB_SLOT]);
+        full = (write_ptr_ff[MSB_SLOT-1:0] == read_ptr_ff[MSB_SLOT-1:0] ) 
+            && (write_ptr_ff[MSB_SLOT]!= read_ptr_ff[MSB_SLOT]);
                 
-        data_out = empty ? 0 : fifo_ff[read_ptr_ff[`MSB_SLOT-1:0]];
+        data_out = empty ? 0 : fifo_ff[read_ptr_ff[MSB_SLOT-1:0]];
         
         if (write_en && ~full)
             next_write_ptr = write_ptr_ff + 1'b1;
@@ -63,7 +67,7 @@ module vc_buffer(
             write_ptr_ff <= next_write_ptr;
             read_ptr_ff <= next_read_ptr;
             if (write_en && ~full)
-                fifo_ff[write_ptr_ff[`MSB_SLOT-1:0]] <= data_in;
+                fifo_ff[write_ptr_ff[MSB_SLOT-1:0]] <= data_in;
         end
     end
 endmodule
