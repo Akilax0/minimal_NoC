@@ -32,12 +32,12 @@ Module to handle SWNET instruction. Currently assuming the input is write data. 
 
 - gp_fifo (paramterized , tested for read , write) &check;
 - async_fifo (parameterized, read/write, different clocks) &check;
-- ni (parameterized, include async_fifo controlled with axi4lite)
-- swnet (paramterized)
-- lwnet (paramterized)
-- input controller (check write buffer and vc buffers of input module)
-- input router (parameterized algo select)
-- vc buffers (parameterized)
+- ni (parameterized, include async_fifo controlled with axi4lite) &check;
+- swnet (paramterized)&check;
+- lwnet (paramterized)&check;
+- input controller (check write buffer and vc buffers of input module)&check;
+- input router (parameterized algo select)&check;
+- vc buffers (parameterized)&check;
 - input module (putting all together)
 - rr_arbiter (check for arbite control of local module)
 - rr_arbiter global router or switch allocator (Do this computation)
