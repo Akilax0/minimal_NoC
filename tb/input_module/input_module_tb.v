@@ -56,23 +56,13 @@ module input_module_tb();
         clk = 1;
         reset = 1;
 
-        data_in = 32'h01010001;
-        input_empty = 1'b1;
+        data_in = 32'h00000000;
+        input_empty = 1'b0;
         read_en = 1'b0;
 
         #20;
         // Release reset
         reset = 0;
-        
-        #20;
-
-        data_in = 32'h01000001;
-        input_empty = 1'b1;
-        read_en = 1'b0;
-        // North but same port
-
-        #20;
-
 
         data_in = 32'h01020001;
         input_empty = 1'b1;
@@ -84,18 +74,73 @@ module input_module_tb();
         input_empty = 1'b1;
         read_en = 1'b0;
         // West
-
+        //
         #20;
-        data_in = 32'h02010001;
-        input_empty = 1'b1;
-        read_en = 1'b0;
-        // East
-
-        #20;
-        data_in = 32'h02010001;
-        input_empty = 1'b1;
+        input_empty = 1'b0;
         read_en = 1'b1;
-        // East
+
+        #20;
+        input_empty = 1'b0;
+        read_en = 1'b1;
+
+        #20;
+        input_empty = 1'b0;
+        read_en = 1'b1;
+
+        #20;
+        input_empty = 1'b0;
+        read_en = 1'b1;
+        
+        
+        // data_in = 32'h01000001;
+        // input_empty = 1'b1;
+        // read_en = 1'b0;
+        // // North but same port
+
+        // #20;
+
+        // data_in = 32'h01020001;
+        // input_empty = 1'b1;
+        // read_en = 1'b0;
+        // //South
+
+        // #20;
+        // data_in = 32'h00010001;
+        // input_empty = 1'b1;
+        // read_en = 1'b0;
+        // // West
+
+        // #20;
+
+        // data_in = 32'h01020002;
+        // input_empty = 1'b1;
+        // read_en = 1'b0;
+        // //South
+
+        #20;
+
+        
+        input_empty = 1'b0;
+
+
+        // #20;
+        // data_in = 32'h01020002;
+        // input_empty = 1'b0;
+        // read_en = 1'b1;
+        // // East
+
+
+        // #20;
+        // data_in = 32'h02010001;
+        // input_empty = 1'b1;
+        // read_en = 1'b0;
+        // // East
+
+        // #20;
+        // data_in = 32'h02010001;
+        // input_empty = 1'b1;
+        // read_en = 1'b1;
+        // // East
 
         #40;
         reset = 0;

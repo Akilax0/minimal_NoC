@@ -76,11 +76,15 @@ module input_module(
     wire [4:0] read_empty;
 
     assign buffer_empty = !full_N && !full_S && !full_E && !full_W && !full_L;
-    assign write_en = (vc_select!=`INVALID && !reset)? 1'b1 : 1'b0;
+    
+    // Need to figure a better way for this
+    // check vc select signal here should be able to resolve this 
+    assign write_en = (vc_select!=`INVALID && !reset && input_empty)? 1'b1 : 1'b0;
     // assign read_empty = !empty_N || !empty_E || !empty_L || !empty_S || !empty_W; 
     
     assign read_empty = {!empty_L,!empty_W,!empty_E,!empty_S,!empty_N}; // 5 request inputs , and with not full 
 
+    // Signals to the module checked
     input_controller controller(
         .clk(clk),
         .reset(reset),
@@ -101,7 +105,7 @@ module input_module(
         .vc_select(vc_select) // check if this is needed to be output
     );
     
-
+    // signals for the 5 virtual channels
     wire write_en_N, write_en_S, write_en_E, write_en_W;
     wire read_en_N, read_en_S, read_en_E, read_en_W;
     

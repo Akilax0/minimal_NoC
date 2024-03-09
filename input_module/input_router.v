@@ -89,7 +89,7 @@ module input_router(
             end
 
             // check if this works to avoid packets be sending back to source 
-            if(vc_select == PORT )
+            if(vc_select == PORT || reset )
                 vc_select = `INVALID;
         end
         else begin
@@ -117,7 +117,7 @@ module input_router(
                 end
             end
 
-            if(vc_select == PORT )
+            if(vc_select == PORT || reset )
                 vc_select = `INVALID;
                 
         end
