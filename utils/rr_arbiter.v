@@ -10,6 +10,10 @@ if not empty && rrarbiter
 
 The arbiter has an FSM to cycle throough the choices
 
+
+NOTE: Please see that the request change should nbot happen on a posedge to work correctly
+
+
 */
 
 module rr_arbiter(
@@ -48,9 +52,10 @@ module rr_arbiter(
       state <= next_state;
   end
 
-  initial state = s_ideal;
+  // initial state = s_ideal;
 
-  always @ (state, next_state)begin
+  // always @ (state, next_state, request)begin
+  always @ (request)begin
     case(state)
       s_ideal: begin
         if (request[0])begin

@@ -7,6 +7,10 @@ Checks if input data is avaialable and virtual channel buffers are available
 data to be read. Once the condition is verified sends read signal
 to the input side data.
     
+Here the buffer empty is a AND of empty of all the virtual channels 
+
+NOTE: Can we make this for each of the buffers , taking into account the vc_select as well
+    
 */
 
 
@@ -17,7 +21,6 @@ module input_controller(
     input wire buffer_empty,
     output reg input_read
 );
-
 
     always @ (*)begin
         if (input_empty == 1'b0  && buffer_empty ==1'b1)

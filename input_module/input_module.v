@@ -29,15 +29,13 @@ module input_module(
     input wire reset, 
     input wire [DSIZE-1:0] data_in,
 
-    input wire input_empty,
+    input wire input_empty, // checks if write buffer of NI is not empty
     output wire input_read,
 
     output wire [DSIZE-1:0] data_out,
 
-
     // signal from output side to read from vc_buffers
     input wire read_en,
-    
     
     // check if this is needed to be output
     output wire [2:0] vc_select

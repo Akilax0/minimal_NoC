@@ -39,7 +39,7 @@ Module to handle SWNET instruction. Currently assuming the input is write data. 
 - input router (parameterized algo select)&check;
 - vc buffers (parameterized)&check;
 - input module (putting all together)
-- rr_arbiter (check for arbite control of local module)
+- rr_arbiter (check for arbite control of local module)&check;
 - rr_arbiter global router or switch allocator (Do this computation)
 - output module (flow control of both ends)
 - switch (use switch allocator signal)

@@ -18,6 +18,9 @@ port is inputted to be ignored
 DOES NOT ACCOUNT FOR SAME PORT JUST YET -> Now it happens!! gives out invalid 
 both xy and yx tested
 
+The PORT , ROUTER_X, ROUTER_Y, akgorithm is set as parameters for the input router
+For each data_in check dest_x and dest_y to find vc_select
+
 */
 
 module input_router(
@@ -54,9 +57,6 @@ module input_router(
     `define W 3'b011
     `define L 3'b100
     `define INVALID 3'b111
-    
-    `define HEAD 2'b11
-
     
     wire [RRSIZE-1:0] dest_x,dest_y;
     
